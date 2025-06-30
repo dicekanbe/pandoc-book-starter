@@ -1,0 +1,51 @@
+name: Build Books
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Pandoc
+      uses: r-lib/actions/setup-pandoc@v2
+      with:
+        pandoc-version: 'latest'
+    
+    - name: Install TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+    
+    - name: Install Node.js for textlint
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install textlint dependencies
+      run: |
+        npm install -g textlint
+        npm install -g textlint-rule-preset-ja-technical-writing
+        npm install -g textlint-rule-preset-ja-spacing
+        npm install -g textlint-rule-prh
+    
+    - name: Run textlint
+      run: |
+        textlint vol1/src/ja/*.md || true
+        textlint vol1/src/en/*.md || true
+    
+    - name: Build books
+      run: |
+        make build-all
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: built-books
+        path: build/

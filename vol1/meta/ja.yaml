@@ -1,0 +1,68 @@
+---
+title: "Pandoc技術書スターター"
+subtitle: "効率的な技術書執筆のためのワークフロー"
+author: 
+  - "著者名"
+date: "2025年6月"
+lang: ja
+description: |
+  Pandocを使った効率的な技術書執筆方法を学ぶための実践的なガイドブック。
+  マークダウンからEPUB、PDFへの変換、多言語対応、CI/CDによる自動化まで、
+  現代的な技術書制作のワークフローを包括的に解説します。
+
+# EPUB設定
+cover-image: assets/cover-ja.png
+epub-chapter-level: 2
+epub-metadata: |
+  <dc:publisher>Your Publisher</dc:publisher>
+  <dc:rights>Copyright 2025, Your Name</dc:rights>
+  <dc:subject>技術書執筆</dc:subject>
+  <dc:subject>Pandoc</dc:subject>
+  <dc:subject>Markdown</dc:subject>
+
+# PDF設定
+documentclass: book
+classoption:
+  - openany
+  - oneside
+geometry:
+  - margin=2.5cm
+fontsize: 11pt
+mainfont: "Noto Sans JP"
+monofont: "Fira Code"
+CJKmainfont: "Noto Sans JP"
+
+# 目次設定
+table-of-contents: true
+toc-title: "目次"
+
+# その他の設定
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+toccolor: black
+
+# カスタムヘッダー
+header-includes: |
+  <style>
+  .chapter-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.3em;
+    margin-bottom: 1em;
+  }
+  </style>
+
+# 巻末情報
+colophon: |
+  本書は Pandoc Book Starter を使用して制作されました。
+  
+  - 執筆: Markdown
+  - 変換: Pandoc
+  - スタイリング: CSS
+  - 自動化: GitHub Actions
+  
+  初版発行: 2025年6月30日
+---

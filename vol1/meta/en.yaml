@@ -1,0 +1,67 @@
+---
+title: "Pandoc Book Starter"
+subtitle: "Efficient Workflow for Technical Writing"
+author: 
+  - "Author Name"
+date: "June 2025"
+lang: en
+description: |
+  A practical guidebook for learning efficient technical writing methods using Pandoc.
+  This comprehensive guide covers modern technical book production workflows,
+  from Markdown to EPUB and PDF conversion, multi-language support, and automation with CI/CD.
+
+# EPUB settings
+cover-image: assets/cover-en.png
+epub-chapter-level: 2
+epub-metadata: |
+  <dc:publisher>Your Publisher</dc:publisher>
+  <dc:rights>Copyright 2025, Your Name</dc:rights>
+  <dc:subject>Technical Writing</dc:subject>
+  <dc:subject>Pandoc</dc:subject>
+  <dc:subject>Markdown</dc:subject>
+
+# PDF settings
+documentclass: book
+classoption:
+  - openany
+  - oneside
+geometry:
+  - margin=2.5cm
+fontsize: 11pt
+mainfont: "Noto Sans"
+monofont: "Fira Code"
+
+# Table of contents settings
+table-of-contents: true
+toc-title: "Table of Contents"
+
+# Other settings
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+toccolor: black
+
+# Custom headers
+header-includes: |
+  <style>
+  .chapter-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.3em;
+    margin-bottom: 1em;
+  }
+  </style>
+
+# Colophon
+colophon: |
+  This book was produced using Pandoc Book Starter.
+  
+  - Writing: Markdown
+  - Conversion: Pandoc
+  - Styling: CSS
+  - Automation: GitHub Actions
+  
+  First Edition: June 30, 2025
+---
