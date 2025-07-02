@@ -12,9 +12,9 @@ function CodeBlock(block)
     
     -- Create a temporary file for the mermaid code
     local tmp_file = os.tmpname() .. ".mmd"
-    local svg_file = os.tmpname() .. ".svg"
+    local png_file = os.tmpname() .. ".png"
     
-    io.stderr:write("Temp files: " .. tmp_file .. ", " .. svg_file .. "\n")
+    io.stderr:write("Temp files: " .. tmp_file .. ", " .. png_file .. "\n")
     
     -- Write mermaid code to temporary file
     local file = io.open(tmp_file, "w")
@@ -22,40 +22,40 @@ function CodeBlock(block)
       file:write(block.text)
       file:close()
       
-      -- Convert mermaid to SVG using mermaid-cli (mmdc)
-      local command = string.format("mmdc -i %s -o %s -t neutral -b white", tmp_file, svg_file)
+      -- Convert mermaid to PNG using mermaid-cli (mmdc)
+      local command = string.format("mmdc -i %s -o %s -t neutral -b white", tmp_file, png_file)
       io.stderr:write("Running command: " .. command .. "\n")
       local success = os.execute(command)
       
       io.stderr:write("Command result: " .. tostring(success) .. "\n")
       io.stderr:write("Output format: " .. FORMAT .. "\n")
       
-      -- Check if SVG file was created (more reliable than os.execute return value)
-      local svg_file_handle = io.open(svg_file, "r")
-      if svg_file_handle then
-        local svg_content = svg_file_handle:read("*all")
-        svg_file_handle:close()
+      -- Check if PNG file was created (more reliable than os.execute return value)
+      local png_file_handle = io.open(png_file, "rb")
+      if png_file_handle then
+        local png_content = png_file_handle:read("*all")
+        png_file_handle:close()
         
-        io.stderr:write("SVG content length: " .. string.len(svg_content) .. "\n")
+        io.stderr:write("PNG content length: " .. string.len(png_content) .. "\n")
           
-          -- For EPUB, we need to handle SVG differently
+          -- For EPUB, we need to handle PNG differently
           if FORMAT:match 'epub' then
             io.stderr:write("Processing for EPUB format\n")
             -- Increment counter for unique filename
             mermaid_counter = mermaid_counter + 1
-            local image_filename = string.format("mermaid-%d.svg", mermaid_counter)
+            local image_filename = string.format("mermaid-%d.png", mermaid_counter)
             
-            io.stderr:write("Creating permanent SVG file: " .. image_filename .. "\n")
+            io.stderr:write("Creating permanent PNG file: " .. image_filename .. "\n")
             
-            -- Create a permanent SVG file in the working directory
-            local permanent_svg = io.open(image_filename, "w")
-            if permanent_svg then
-              permanent_svg:write(svg_content)
-              permanent_svg:close()
+            -- Create a permanent PNG file in the working directory
+            local permanent_png = io.open(image_filename, "wb")
+            if permanent_png then
+              permanent_png:write(png_content)
+              permanent_png:close()
               
               -- Clean up temporary files
               os.remove(tmp_file)
-              os.remove(svg_file)
+              os.remove(png_file)
               
               io.stderr:write("Returning image element\n")
               
@@ -68,17 +68,41 @@ function CodeBlock(block)
                 )
               })
             else
-              io.stderr:write("Failed to create permanent SVG file\n")
+              io.stderr:write("Failed to create permanent PNG file\n")
             end
           else
             io.stderr:write("Processing for HTML format\n")
-            -- For HTML output, return as raw SVG
-            -- Clean up temporary files
-            os.remove(tmp_file)
-            os.remove(svg_file)
+            -- For HTML output, create a permanent PNG file and return as image
+            -- Increment counter for unique filename
+            mermaid_counter = mermaid_counter + 1
+            local image_filename = string.format("mermaid-%d.png", mermaid_counter)
             
-            -- Return the SVG as raw HTML
-            return pandoc.RawBlock("html", svg_content)
+            io.stderr:write("Creating permanent PNG file: " .. image_filename .. "\n")
+            
+            -- Create a permanent PNG file in the working directory
+            local permanent_png = io.open(image_filename, "wb")
+            if permanent_png then
+              permanent_png:write(png_content)
+              permanent_png:close()
+              
+              -- Clean up temporary files
+              os.remove(tmp_file)
+              os.remove(png_file)
+              
+              -- Return as Image element for HTML
+              return pandoc.Para({
+                pandoc.Image(
+                  {pandoc.Str("Mermaid Diagram")}, -- alt text
+                  image_filename, -- src
+                  "Mermaid Diagram" -- title
+                )
+              })
+            else
+              io.stderr:write("Failed to create permanent PNG file\n")
+              -- Clean up temporary files
+              os.remove(tmp_file)
+              os.remove(png_file)
+            end
           end
       else
         io.stderr:write("mmdc command failed\n")
@@ -86,8 +110,8 @@ function CodeBlock(block)
       
       -- Clean up temporary files in case of failure
       os.remove(tmp_file)
-      if io.open(svg_file, "r") then
-        os.remove(svg_file)
+      if io.open(png_file, "rb") then
+        os.remove(png_file)
       end
     else
       io.stderr:write("Failed to create temp file\n")
