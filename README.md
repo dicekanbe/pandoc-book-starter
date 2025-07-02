@@ -48,7 +48,7 @@ pandoc-book-starter/
 
 ### 基本環境
 
-- [Pandoc](https://pandoc.org/) 2.17以降
+- [Pandoc](https://pandoc.org/) 3.0以降
 - [Make](https://www.gnu.org/software/make/)
 - [Node.js](https://nodejs.org/) （textlint用）
 
