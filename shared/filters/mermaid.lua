@@ -20,7 +20,17 @@ function CodeBlock(block)
     -- Create puppeteer config file
     local config = io.open(config_file, "w")
     if config then
-      config:write('{"args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]}')
+      config:write([[{
+  "args": [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--disable-gpu",
+    "--disable-web-security",
+    "--disable-features=IsolateOrigins",
+    "--disable-site-isolation-trials"
+  ]
+}]])
       config:close()
     end
     

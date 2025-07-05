@@ -36,31 +36,35 @@ jobs:
       run: |
         echo "textlint"
     
-    - name: Install Chromium
+    - name: Install dependencies for Puppeteer
       run: |
         sudo apt-get update
-        sudo apt-get install -y chromium-browser
+        sudo apt-get install -y \
+          libnss3 \
+          libatk1.0-0 \
+          libatk-bridge2.0-0 \
+          libcups2 \
+          libdrm2 \
+          libxkbcommon0 \
+          libxcomposite1 \
+          libxdamage1 \
+          libxrandr2 \
+          libgbm1 \
+          libgtk-3-0 \
+          libasound2
     
     - name: Install mermaid-cli
       run: |
         npm install -g @mermaid-js/mermaid-cli
-        # Find the actual mmdc path
-        MMDC_PATH=$(which mmdc)
-        echo "Found mmdc at: $MMDC_PATH"
-        # Backup original mmdc
-        sudo cp "$MMDC_PATH" "${MMDC_PATH}.orig"
-        # Create wrapper script to force no-sandbox mode
-        cat << EOF > /tmp/mmdc-wrapper
-        #!/bin/bash
-        export PUPPETEER_ARGS='--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu'
-        export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
-        exec ${MMDC_PATH}.orig "\$@"
-        EOF
-        sudo mv /tmp/mmdc-wrapper "$MMDC_PATH"
-        sudo chmod +x "$MMDC_PATH"
+        # Set up environment for puppeteer
+        echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false" >> $GITHUB_ENV
+        echo "PUPPETEER_ARGS=--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu" >> $GITHUB_ENV
 
     - name: Build books
       run: |
+        # Ensure puppeteer environment variables are exported
+        export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+        export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
         make build-all
     
     - name: Upload artifacts
