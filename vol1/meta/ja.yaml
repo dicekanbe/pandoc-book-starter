@@ -28,9 +28,6 @@ classoption:
 geometry:
   - margin=2.5cm
 fontsize: 11pt
-mainfont: "Noto Sans JP"
-monofont: "Fira Code"
-CJKmainfont: "Noto Sans JP"
 
 # 目次設定
 table-of-contents: true
@@ -44,16 +41,11 @@ toccolor: black
 
 # カスタムヘッダー
 header-includes: |
-  <style>
-  .chapter-title {
-    font-size: 2em;
-    font-weight: bold;
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.3em;
-    margin-bottom: 1em;
-  }
-  </style>
+  \usepackage{fontspec}
+  \setmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
+  \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
+  \usepackage{xeCJK}
+  \setCJKmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
 
 # 巻末情報
 colophon: |

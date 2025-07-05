@@ -28,8 +28,6 @@ classoption:
 geometry:
   - margin=2.5cm
 fontsize: 11pt
-mainfont: "Noto Sans"
-monofont: "Fira Code"
 
 # Table of contents settings
 table-of-contents: true
@@ -43,16 +41,9 @@ toccolor: black
 
 # Custom headers
 header-includes: |
-  <style>
-  .chapter-title {
-    font-size: 2em;
-    font-weight: bold;
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.3em;
-    margin-bottom: 1em;
-  }
-  </style>
+  \usepackage{fontspec}
+  \setmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
+  \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
 
 # Colophon
 colophon: |

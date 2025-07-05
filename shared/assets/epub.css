@@ -1,5 +1,13 @@
 /* EPUB CSS Styles */
 
+/* Font face declarations */
+@font-face {
+    font-family: 'Fira Code';
+    src: url('fonts/FiraCode-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Base styles */
 body {
     font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
