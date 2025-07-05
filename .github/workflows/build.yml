@@ -16,8 +16,8 @@ jobs:
     
     - name: Install TeX Live
       run: |
-        apt-get update
-        apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+        sudo apt-get update
+        sudo apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
     
     - name: Install Node.js for textlint
       uses: actions/setup-node@v4
