@@ -9,15 +9,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/pandoc/core:3.7.0.2-ubuntu
     
     steps:
     - uses: actions/checkout@v4
     
+    - name: Setup Pandoc
+      uses: r-lib/actions/setup-pandoc@v2
+      with:
+        pandoc-version: '3.7.0.2'
+    
     - name: Install TeX Live
       run: |
-        apt-get update
-        apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-lang-cjk texlive-lang-chinese texlive-lang-japanese
+        sudo apt-get update
+        sudo apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-lang-cjk texlive-lang-chinese texlive-lang-japanese
     
     - name: Install Node.js for textlint
       uses: actions/setup-node@v4
@@ -37,8 +41,6 @@ jobs:
         npm install -g @mermaid-js/mermaid-cli
 
     - name: Build books
-      env:
-        PUPPETEER_ARGS: "--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
       run: |
         make build-all
     

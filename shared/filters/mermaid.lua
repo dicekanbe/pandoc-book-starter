@@ -23,7 +23,7 @@ function CodeBlock(block)
       file:close()
       
       -- Convert mermaid to PNG using mermaid-cli (mmdc)
-      local command = string.format("PUPPETEER_ARGS='--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu' mmdc -i %s -o %s -t neutral -b white", tmp_file, png_file)
+      local command = string.format("mmdc -i %s -o %s -t neutral -b white", tmp_file, png_file)
       io.stderr:write("Running command: " .. command .. "\n")
       local success = os.execute(command)
       
