@@ -29,7 +29,7 @@ build-ja:
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
 		--number-sections \
-		--resource-path=../$(SHARED_DIR)/assets \
+		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/ja/book.epub \
 		src/ja/*.md
 	@echo "Cleaning up temporary mermaid files..."
@@ -43,7 +43,7 @@ build-en:
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
 		--number-sections \
-		--resource-path=../$(SHARED_DIR)/assets \
+		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/en/book.epub \
 		src/en/*.md
 	@echo "Cleaning up temporary mermaid files..."
