@@ -1,7 +1,5 @@
 # Pandoc Book Starter Makefile
 
-PATH := $(HOME)/.asdf/installs/nodejs/22.14.0/bin:$(PATH)
-
 # Variables
 PANDOC = pandoc
 BUILD_DIR = build
