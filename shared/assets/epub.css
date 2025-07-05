@@ -3,7 +3,7 @@
 /* Font face declarations */
 @font-face {
     font-family: 'Fira Code';
-    src: url('FiraCode-Regular.ttf') format('truetype');
+    src: url('../Fonts/FiraCode-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
