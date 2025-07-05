@@ -3,7 +3,7 @@ title: "Pandoc Book Starter"
 subtitle: "Efficient Workflow for Technical Writing"
 author: 
   - "Author Name"
-date: "June 2025"
+date: "2025-06-30"
 lang: en
 description: |
   A practical guidebook for learning efficient technical writing methods using Pandoc.
@@ -55,4 +55,8 @@ colophon: |
   - Automation: GitHub Actions
   
   First Edition: June 30, 2025
+
+# リソースファイル
+resource-path:
+  - "../shared/assets"
 ---

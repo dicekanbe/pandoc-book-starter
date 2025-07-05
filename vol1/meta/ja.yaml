@@ -3,7 +3,7 @@ title: "Pandoc技術書スターター"
 subtitle: "効率的な技術書執筆のためのワークフロー"
 author: 
   - "著者名"
-date: "2025年6月"
+date: "2025-06-30"
 lang: ja
 description: |
   Pandocを使った効率的な技術書執筆方法を学ぶための実践的なガイドブック。
@@ -57,4 +57,8 @@ colophon: |
   - 自動化: GitHub Actions
   
   初版発行: 2025年6月30日
+
+# リソースファイル
+resource-path:
+  - "../shared/assets"
 ---
