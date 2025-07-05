@@ -36,9 +36,28 @@ jobs:
       run: |
         echo "textlint"
     
+    - name: Install Chromium
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
+    
     - name: Install mermaid-cli
       run: |
         npm install -g @mermaid-js/mermaid-cli
+        # Find the actual mmdc path
+        MMDC_PATH=$(which mmdc)
+        echo "Found mmdc at: $MMDC_PATH"
+        # Create wrapper script to force no-sandbox mode
+        sudo tee /usr/local/bin/mmdc-wrapper > /dev/null << EOF
+        #!/bin/bash
+        export PUPPETEER_ARGS='--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu'
+        export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+        $MMDC_PATH "\$@"
+        EOF
+        sudo chmod +x /usr/local/bin/mmdc-wrapper
+        # Replace mmdc with wrapper
+        sudo mv "$MMDC_PATH" "${MMDC_PATH}.orig"
+        sudo ln -s /usr/local/bin/mmdc-wrapper "$MMDC_PATH"
 
     - name: Build books
       run: |

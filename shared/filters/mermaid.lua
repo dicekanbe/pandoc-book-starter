@@ -13,8 +13,16 @@ function CodeBlock(block)
     -- Create a temporary file for the mermaid code
     local tmp_file = os.tmpname() .. ".mmd"
     local png_file = os.tmpname() .. ".png"
+    local config_file = os.tmpname() .. ".json"
     
     io.stderr:write("Temp files: " .. tmp_file .. ", " .. png_file .. "\n")
+    
+    -- Create puppeteer config file
+    local config = io.open(config_file, "w")
+    if config then
+      config:write('{"args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]}')
+      config:close()
+    end
     
     -- Write mermaid code to temporary file
     local file = io.open(tmp_file, "w")
@@ -23,7 +31,7 @@ function CodeBlock(block)
       file:close()
       
       -- Convert mermaid to PNG using mermaid-cli (mmdc)
-      local command = string.format("mmdc -i %s -o %s -t neutral -b white", tmp_file, png_file)
+      local command = string.format("mmdc -i %s -o %s -t neutral -b white --puppeteerConfigFile %s", tmp_file, png_file, config_file)
       io.stderr:write("Running command: " .. command .. "\n")
       local success = os.execute(command)
       
@@ -56,6 +64,7 @@ function CodeBlock(block)
               -- Clean up temporary files
               os.remove(tmp_file)
               os.remove(png_file)
+              os.remove(config_file)
               
               io.stderr:write("Returning image element\n")
               
@@ -88,6 +97,7 @@ function CodeBlock(block)
               -- Clean up temporary files
               os.remove(tmp_file)
               os.remove(png_file)
+              os.remove(config_file)
               
               -- Return as Image element for HTML
               return pandoc.Para({
@@ -102,6 +112,7 @@ function CodeBlock(block)
               -- Clean up temporary files
               os.remove(tmp_file)
               os.remove(png_file)
+              os.remove(config_file)
             end
           end
       else
@@ -113,6 +124,7 @@ function CodeBlock(block)
       if io.open(png_file, "rb") then
         os.remove(png_file)
       end
+      os.remove(config_file)
     else
       io.stderr:write("Failed to create temp file\n")
     end
