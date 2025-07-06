@@ -3,8 +3,13 @@ name: Build Books
 on:
   push:
     branches: [ main, develop ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main ]
+
+permissions:
+  contents: write  # リリースの作成とファイルアップロードに必要
 
 jobs:
   build:
@@ -65,7 +70,7 @@ jobs:
         # Ensure puppeteer environment variables are exported
         export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
         export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
-        make build-all
+        make epub-all pdf-all
     
     - name: Install EPUBCheck
       run: |
@@ -103,3 +108,85 @@ jobs:
       with:
         name: built-books
         path: build/
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: built-books
+        path: build/
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        body: |
+          ## 📚 電子書籍リリース ${{ github.ref_name }}
+          
+          このリリースには以下のファイルが含まれています：
+          
+          ### 📖 日本語版
+          - `book-ja.epub` - EPUB形式
+          - `book-ja.pdf` - PDF形式
+          
+          ### 📖 English Version
+          - `book-en.epub` - EPUB format
+          - `book-en.pdf` - PDF format
+          
+          ### 🔍 変更内容
+          詳細な変更内容については、コミット履歴をご確認ください。
+          
+          ### 📋 システム要件
+          - EPUB: Kindle、Calibre、Adobe Digital Editions等のEPUBリーダー
+          - PDF: PDF対応のビューアー
+        draft: false
+        prerelease: false
+    
+    - name: Upload Japanese EPUB
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/vol1/ja/book.epub
+        asset_name: book-ja.epub
+        asset_content_type: application/epub+zip
+    
+    - name: Upload Japanese PDF
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/vol1/ja/book.pdf
+        asset_name: book-ja.pdf
+        asset_content_type: application/pdf
+    
+    - name: Upload English EPUB
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/vol1/en/book.epub
+        asset_name: book-en.epub
+        asset_content_type: application/epub+zip
+    
+    - name: Upload English PDF
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/vol1/en/book.pdf
+        asset_name: book-en.pdf
+        asset_content_type: application/pdf
