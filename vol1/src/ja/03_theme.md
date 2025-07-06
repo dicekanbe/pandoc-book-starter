@@ -1,11 +1,3 @@
----
-title: "テーマについて"
-subtitle: "データドリブンでニーズを測る"
-summary: |
-  テーマについて
-keywords: ["テーマについて"]
-chapter-start: 1
----
 
 # テーマについて
 

@@ -23,7 +23,6 @@ PDF_OPTS = --to=pdf \
 	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua
 
-
 # Help target
 help:
 	@echo "Available targets:"
