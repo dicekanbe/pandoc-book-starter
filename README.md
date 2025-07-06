@@ -176,12 +176,15 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
    --epub-cover-image /data/vol1/assets/cover-ja.png \
    -o /data/book.epub"
 
-# PDFの生成（フォント指定あり）
+# PDFの生成（日本語対応）
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
   "pandoc /data/vol1/src/ja/*.md --to pdf \
-   --pdf-engine=xelatex \
+   --pdf-engine=lualatex \
    --metadata lang=ja \
-   --metadata mainfont='Noto Sans Japanese' \
+   --metadata documentclass=article \
+   --metadata mainfont='Noto Sans CJK JP' \
+   --metadata sansfont='Noto Sans CJK JP' \
+   --metadata monofont='Noto Sans Mono CJK JP' \
    -o /data/book.pdf"
 ```
 
@@ -226,15 +229,18 @@ git push origin v1.0.0
 
 1. **フォントが見つからない（PDF）**:
    - 解決策: システムフォントを使用するか、`shared/assets/fonts/` にフォントファイルを配置
-   - 日本語フォント: `Noto Sans Japanese`, `Hiragino Sans`, `Yu Gothic`など
+   - 日本語フォント: `Noto Sans CJK JP`, `Hiragino Sans`, `Yu Gothic`など
+   - コードブロック用: `Noto Sans Mono CJK JP`, `Source Han Code JP`など日本語対応等幅フォント
 
 2. **Mermaid図表が表示されない**:
    - 解決策: `mermaid-cli` 10.9.1以降をインストール
    - Docker環境では自動的にインストール済み
 
 3. **PDF生成エラー**:
-   - 解決策: TeX Live 2025をインストール、または`ltjsbook`クラスを使用
-   - 日本語PDF: LuaLaTeX + luatexja-fontspecを推奨
+   - 解決策: TeX Live 2025をインストール、`article`クラスを使用
+   - 日本語PDF: LuaLaTeX + コマンドラインフォント指定を推奨
+   - `ltjsbook.cls`エラー: `--metadata documentclass=article`を使用
+   - コードブロック内の日本語文字エラー: `monofont`を日本語対応フォントに設定
 
 4. **EPUB検証エラー**:
    - 解決策: EPUBCheckで検証し、HTMLタグやCSSの問題を修正
@@ -244,18 +250,50 @@ git push origin v1.0.0
    - 解決策: `GITHUB_TOKEN`の権限確認、ファイルパスの確認
    - リリース作成時は`contents: write`権限が必要
 
+6. **コードブロック内の日本語文字が表示されない**:
+   - 原因: 等幅フォント（monofont）が日本語に対応していない
+   - 解決策: `--metadata monofont='Noto Sans Mono CJK JP'`を追加
+   - 代替フォント: `Source Han Code JP`, `Ricty Diminished`など
+
+7. **日本語PDF生成の完全な解決策**:
+   - 推奨コマンド（外部ファイル不要）:
+   ```bash
+   docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
+     "pandoc /data/vol1/src/ja/*.md --to pdf \
+      --pdf-engine=lualatex \
+      --metadata lang=ja \
+      --metadata documentclass=article \
+      --metadata mainfont='Noto Sans CJK JP' \
+      --metadata sansfont='Noto Sans CJK JP' \
+      --metadata monofont='Noto Sans Mono CJK JP' \
+      -o /data/book.pdf"
+   ```
+   - `ltjsbook.cls`エラーの場合: `article`クラスを使用
+   - フォント警告の場合: 3つのフォント（main/sans/mono）を全て指定
+
 ### ログの確認
 
 ```bash
 # デバッグモードでビルド
 make epub PANDOC_OPTS="--verbose"
 
-# Docker環境でのデバッグ
+# Docker環境でのデバッグ（EPUB）
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
   "pandoc /data/vol1/src/ja/*.md --to epub3 --verbose \
    --css /data/shared/assets/epub.css \
    --metadata-file /data/vol1/meta/ja.yaml \
    -o /data/debug.epub"
+
+# Docker環境でのデバッグ（PDF・日本語フォント対応）
+docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
+  "pandoc /data/vol1/src/ja/*.md --to pdf  --verbose \
+   --pdf-engine=lualatex \
+   --metadata lang=ja \
+   --metadata documentclass=article \
+   --metadata mainfont='Noto Sans CJK JP' \
+   --metadata sansfont='Noto Sans CJK JP' \
+   --metadata monofont='Noto Sans Mono CJK JP' \
+   -o /data/debug.pdf"
 ```
 
 ### 環境別の設定
@@ -286,7 +324,7 @@ npm install -g @mermaid-js/mermaid-cli
 
 ## ライセンス
 
-MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
+Apache License 2.0 - 詳細は [LICENSE](LICENSE) ファイルを参照
 
 ## 貢献
 
