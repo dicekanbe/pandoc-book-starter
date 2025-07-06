@@ -5,6 +5,24 @@ PANDOC = pandoc
 BUILD_DIR = build
 SHARED_DIR = shared
 
+# Common options
+EPUB_OPTS = --to=epub3 \
+	--toc \
+	--toc-depth=3 \
+	--css=../$(SHARED_DIR)/assets/epub.css \
+	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
+	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
+	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+	--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf
+
+PDF_OPTS = --to=pdf \
+	--pdf-engine=xelatex \
+	--toc \
+	--toc-depth=3 \
+	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
+	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
+	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua
+
 
 # Help target
 help:
@@ -22,38 +40,22 @@ help:
 epub:
 	@echo "Building Japanese version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
-	cd vol1 && $(PANDOC) \
-		--to=epub3 \
-		--toc \
-		--toc-depth=3 \
-		--css=../$(SHARED_DIR)/assets/epub.css \
-		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
+	cd vol1 && $(PANDOC) $(EPUB_OPTS) \
+		--metadata-file=meta/ja.yaml \
 		-o ../$(BUILD_DIR)/vol1/ja/book.epub \
 		src/ja/*.md \
-		meta/ja_title.txt \
-		--metadata-file=meta/ja.yaml 
+		meta/ja_title.txt
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
 epub-en:
 	@echo "Building English version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
-	cd vol1 && $(PANDOC) \
-		--to=epub3 \
-		--toc \
-		--toc-depth=3 \
-		--css=../$(SHARED_DIR)/assets/epub.css \
-		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
+	cd vol1 && $(PANDOC) $(EPUB_OPTS) \
+		--metadata-file=meta/en.yaml \
 		-o ../$(BUILD_DIR)/vol1/en/book.epub \
 		src/en/*.md \
-		meta/en_title.txt \
-		--metadata-file=meta/en.yaml
+		meta/en_title.txt
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
@@ -61,38 +63,24 @@ epub-en:
 pdf:
 	@echo "Building Japanese PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
-	cd vol1 && $(PANDOC) \
-		--to=pdf \
+	cd vol1 && $(PANDOC) $(PDF_OPTS) \
 		--metadata lang=ja \
-		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--pdf-engine=xelatex \
-		--toc \
-		--toc-depth=3 \
+		--metadata-file=meta/ja.yaml \
 		-o ../$(BUILD_DIR)/vol1/ja/book.pdf \
 		src/ja/*.md \
-		meta/ja_title.txt \
-		meta/ja.yaml 
+		meta/ja_title.txt
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
 pdf-en:
 	@echo "Building English PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
-	cd vol1 && $(PANDOC) \
-		--to=pdf \
+	cd vol1 && $(PANDOC) $(PDF_OPTS) \
 		--metadata lang=en \
-		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
-		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--pdf-engine=xelatex \
-		--toc \
-		--toc-depth=3 \
+		--metadata-file=meta/en.yaml \
 		-o ../$(BUILD_DIR)/vol1/en/book.pdf \
 		src/en/*.md \
-		meta/en_title.txt \
-		meta/en.yaml 
+		meta/en_title.txt
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
