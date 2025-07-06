@@ -1,0 +1,13 @@
+---
+title: "Pandoc Book Starter"
+subtitle: "Efficient Workflow for Technical Writing"
+author: 
+  - "Author Name"
+date: "2025-06-30"
+lang: en
+description: |
+  A practical guidebook for learning efficient technical writing methods using Pandoc.
+  This comprehensive guide covers modern technical book production workflows,
+  from Markdown to EPUB and PDF conversion, multi-language support, and automation with CI/CD.
+
+...

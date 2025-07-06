@@ -24,28 +24,38 @@ help:
 build-ja:
 	@echo "Building Japanese version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
-	cd vol1 && $(PANDOC) --metadata-file=meta/ja.yaml \
+	cd vol1 && $(PANDOC) \
+		--to=epub3 \
+		--toc \
+		--toc-depth=3 \
 		--css=../$(SHARED_DIR)/assets/epub.css \
+		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--number-sections \
 		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/ja/book.epub \
-		src/ja/*.md
+		src/ja/*.md \
+		meta/ja_title.txt \
+		--metadata-file=meta/ja.yaml 
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
 build-en:
 	@echo "Building English version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
-	cd vol1 && $(PANDOC) --metadata-file=meta/en.yaml \
+	cd vol1 && $(PANDOC) \
+		--to=epub3 \
+		--toc \
+		--toc-depth=3 \
 		--css=../$(SHARED_DIR)/assets/epub.css \
+		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-		--number-sections \
 		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/en/book.epub \
-		src/en/*.md
+		src/en/*.md \
+		meta/en_title.txt \
+		--metadata-file=meta/en.yaml
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
@@ -54,12 +64,14 @@ pdf-ja:
 	@echo "Building Japanese PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
 	cd vol1 && $(PANDOC) --metadata-file=meta/ja.yaml \
+		--to=pdf \
+		--metadata lang=ja \
+		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
 		--pdf-engine=xelatex \
 		--toc \
 		--toc-depth=3 \
-		--number-sections \
 		-o ../$(BUILD_DIR)/vol1/ja/book.pdf \
 		src/ja/*.md
 	@echo "Cleaning up temporary mermaid files..."
@@ -69,12 +81,14 @@ pdf-en:
 	@echo "Building English PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
 	cd vol1 && $(PANDOC) --metadata-file=meta/en.yaml \
+		--to=pdf \
+		--metadata lang=en \
+		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
 		--pdf-engine=xelatex \
 		--toc \
 		--toc-depth=3 \
-		--number-sections \
 		-o ../$(BUILD_DIR)/vol1/en/book.pdf \
 		src/en/*.md
 	@echo "Cleaning up temporary mermaid files..."

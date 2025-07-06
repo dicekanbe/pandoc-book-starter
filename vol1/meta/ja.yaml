@@ -1,15 +1,4 @@
 ---
-title: "Pandoc技術書スターター"
-subtitle: "効率的な技術書執筆のためのワークフロー"
-author: 
-  - "著者名"
-date: "2025-06-30"
-lang: ja
-description: |
-  Pandocを使った効率的な技術書執筆方法を学ぶための実践的なガイドブック。
-  マークダウンからEPUB、PDFへの変換、多言語対応、CI/CDによる自動化まで、
-  現代的な技術書制作のワークフローを包括的に解説します。
-
 # EPUB設定
 cover-image: assets/cover-ja.png
 epub-chapter-level: 2
