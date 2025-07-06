@@ -5,23 +5,21 @@ PANDOC = pandoc
 BUILD_DIR = build
 SHARED_DIR = shared
 
-# Default target
-all: help
 
 # Help target
 help:
 	@echo "Available targets:"
-	@echo "  build-ja     - Build Japanese EPUB version"
-	@echo "  build-en     - Build English EPUB version"
-	@echo "  build-all    - Build all EPUB versions"
-	@echo "  pdf-ja       - Build Japanese PDF version"
+	@echo "  epub     - Build Japanese EPUB version"
+	@echo "  epub-en     - Build English EPUB version"
+	@echo "  epub-all    - Build all EPUB versions"
+	@echo "  pdf       - Build Japanese PDF version"
 	@echo "  pdf-en       - Build English PDF version"
 	@echo "  pdf-all      - Build all PDF versions"
 	@echo "  clean        - Clean build directory"
 	@echo "  help         - Show this help"
 
 # Build targets
-build-ja:
+epub:
 	@echo "Building Japanese version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
 	cd vol1 && $(PANDOC) \
@@ -40,7 +38,7 @@ build-ja:
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
-build-en:
+epub-en:
 	@echo "Building English version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
 	cd vol1 && $(PANDOC) \
@@ -60,7 +58,7 @@ build-en:
 	cd vol1 && rm -f mermaid-*.png
 
 # PDF build targets
-pdf-ja:
+pdf:
 	@echo "Building Japanese PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
 	cd vol1 && $(PANDOC) \
@@ -98,9 +96,9 @@ pdf-en:
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
-pdf-all: pdf-ja pdf-en
+pdf-all: pdf pdf-en
 
-build-all: build-ja build-en pdf-ja pdf-en
+epub-all: epub epub-en
 
 # Clean target
 clean:
