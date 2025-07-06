@@ -1,11 +1,3 @@
----
-title: "利用サンプル"
-subtitle: "データドリブンでニーズを測る"
-summary: |
-  利用サンプル
-keywords: ["利用サンプル"]
-chapter-start: 2
----
 
 # 利用サンプル
 
