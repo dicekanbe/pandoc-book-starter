@@ -100,3 +100,5 @@ temp/
 # OS generated files
 Thumbs.db
 ehthumbs.db
+
+epubcheck-5.1.0/
