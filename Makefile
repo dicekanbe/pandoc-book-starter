@@ -42,8 +42,7 @@ epub:
 	cd vol1 && $(PANDOC) $(EPUB_OPTS) \
 		--metadata-file=meta/ja.yaml \
 		-o ../$(BUILD_DIR)/vol1/ja/book.epub \
-		src/ja/*.md \
-		meta/ja_title.txt
+		src/ja/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
@@ -53,8 +52,7 @@ epub-en:
 	cd vol1 && $(PANDOC) $(EPUB_OPTS) \
 		--metadata-file=meta/en.yaml \
 		-o ../$(BUILD_DIR)/vol1/en/book.epub \
-		src/en/*.md \
-		meta/en_title.txt
+		src/en/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
@@ -66,8 +64,7 @@ pdf:
 		--metadata lang=ja \
 		--metadata-file=meta/ja.yaml \
 		-o ../$(BUILD_DIR)/vol1/ja/book.pdf \
-		src/ja/*.md \
-		meta/ja_title.txt
+		src/ja/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
@@ -78,14 +75,15 @@ pdf-en:
 		--metadata lang=en \
 		--metadata-file=meta/en.yaml \
 		-o ../$(BUILD_DIR)/vol1/en/book.pdf \
-		src/en/*.md \
-		meta/en_title.txt
+		src/en/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
 pdf-all: pdf pdf-en
 
 epub-all: epub epub-en
+
+all: pdf-all epub-all
 
 # Clean target
 clean:
