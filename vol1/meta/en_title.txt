@@ -10,4 +10,4 @@ description: |
   This comprehensive guide covers modern technical book production workflows,
   from Markdown to EPUB and PDF conversion, multi-language support, and automation with CI/CD.
 
-...
+---

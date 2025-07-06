@@ -63,7 +63,7 @@ build-en:
 pdf-ja:
 	@echo "Building Japanese PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
-	cd vol1 && $(PANDOC) --metadata-file=meta/ja.yaml \
+	cd vol1 && $(PANDOC) \
 		--to=pdf \
 		--metadata lang=ja \
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
@@ -73,14 +73,16 @@ pdf-ja:
 		--toc \
 		--toc-depth=3 \
 		-o ../$(BUILD_DIR)/vol1/ja/book.pdf \
-		src/ja/*.md
+		src/ja/*.md \
+		meta/ja_title.txt \
+		meta/ja.yaml 
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
 pdf-en:
 	@echo "Building English PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
-	cd vol1 && $(PANDOC) --metadata-file=meta/en.yaml \
+	cd vol1 && $(PANDOC) \
 		--to=pdf \
 		--metadata lang=en \
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
@@ -90,7 +92,9 @@ pdf-en:
 		--toc \
 		--toc-depth=3 \
 		-o ../$(BUILD_DIR)/vol1/en/book.pdf \
-		src/en/*.md
+		src/en/*.md \
+		meta/en_title.txt \
+		meta/en.yaml 
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
 
