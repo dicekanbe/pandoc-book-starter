@@ -46,8 +46,14 @@ pandoc input.md --css=style.css -o output.html
 
 [リンク](https://example.com)
 
-![画像](image.png)
+![画像](img/image.png)
 ```
+
+[リンク](https://example.com)
+
+![画像](img/image.png)
+
+![テスト画像](img/test.png)
 
 ### 拡張構文
 
@@ -113,12 +119,23 @@ book.epub
 
 ### ワークフロー例
 
+マーメイドの画像は、以下のように表示されます。
+
 ```mermaid
 graph LR
     A[Push] --> B[Lint]
     B --> C[Build]
     C --> D[Test]
     D --> E[Deploy]
+```
+
+マーメイドの画像は、以下のように表示されます。
+
+```mermaid
+graph TD
+    A[Start] --> B[Lint]
+    B --> C[Build]
+
 ```
 
 ## まとめ
