@@ -1,11 +1,11 @@
 ---
-title: "Pandoc Book Starter"
-subtitle: "Efficient Workflow for Technical Writing"
-author: 
+title: &title "Pandoc Book Starter"
+subtitle: &subtitle "Efficient Workflow for Technical Writing"
+author: &author
   - "Author Name"
-date: "2025-06-30"
-lang: en
-description: |
+date: &date "2025-06-30"
+lang: &lang "en"
+description: &description |
   A practical guidebook for learning efficient technical writing methods using Pandoc.
   This comprehensive guide covers modern technical book production workflows,
   from Markdown to EPUB and PDF conversion, multi-language support, and automation with CI/CD.
@@ -47,17 +47,24 @@ header-includes: |
   \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
 
 # Colophon
-colophon: |
-  This book was produced using Pandoc Book Starter.
-  
-  - Writing: Markdown
-  - Conversion: Pandoc
-  - Styling: CSS
-  - Automation: GitHub Actions
-  
-  First Edition: June 30, 2025
+colophon:
+  book-title: *title
+  subtitle: *subtitle
+  publish-date: *date
+  edition: "First Edition"
+  author-label: "Author"
+  publisher: *author
+  printer-label: "Printer"
+  printer: *author 
+  illustrator-label: "Illustrator"
+  illustrator: ""  # not be displayed if empty
+  email-label: "Email"
+  email: "example@gmail.com"
+  web-label: "Web"
+  web: ""
+  disclaimer: "If there is a defect, please contact the email address above."
 
-# リソースファイル
+# Resource files
 resource-path:
   - "../shared/assets"
 ---

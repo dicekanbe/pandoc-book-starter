@@ -7,6 +7,8 @@ SHARED_DIR = shared
 
 # Common options
 EPUB_OPTS = --to=epub3 \
+  -f markdown+grid_tables+multiline_tables \
+	--standalone \
 	--toc \
 	--toc-depth=3 \
 	--css=../$(SHARED_DIR)/assets/epub.css \
@@ -16,12 +18,14 @@ EPUB_OPTS = --to=epub3 \
 	--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf
 
 PDF_OPTS = --to=pdf \
-	--pdf-engine=xelatex \
+  -f markdown+grid_tables+multiline_tables \
+  --standalone \
+	--pdf-engine=lualatex \
 	--toc \
 	--toc-depth=3 \
-	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
-	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
-	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua
+	--top-level-division=chapter \
+	--template=meta/template/custom-template.tex \
+	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua 
 
 # Help target
 help:
@@ -67,10 +71,14 @@ pdf:
 		src/ja/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
+	@echo "Cleaning up temporary LuaTeX files..."
+	cd vol1 && rm -f *.ltjruby
 
 pdf-en:
 	@echo "Building English PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/en
+	mkdir -p vol1/img
+	cd vol1 && cp -r src/en/img/* img/ 2>/dev/null || true
 	cd vol1 && $(PANDOC) $(PDF_OPTS) \
 		--metadata lang=en \
 		--metadata-file=meta/en.yaml \
@@ -78,6 +86,8 @@ pdf-en:
 		src/en/*.md
 	@echo "Cleaning up temporary mermaid files..."
 	cd vol1 && rm -f mermaid-*.png
+	@echo "Cleaning up temporary LuaTeX files..."
+	cd vol1 && rm -f *.ltjruby
 
 pdf-all: pdf pdf-en
 
@@ -88,5 +98,6 @@ all: pdf-all epub-all
 # Clean target
 clean:
 	rm -rf $(BUILD_DIR)
+	cd vol1 && rm -f *.ltjruby
 
 .PHONY: all help build-ja build-en build-all pdf-ja pdf-en pdf-all clean
