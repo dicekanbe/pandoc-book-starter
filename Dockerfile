@@ -10,10 +10,15 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -y \
     texlive-lang-japanese \
+    texlive-latex-base \
     texlive-luatex \
     texlive-latex-extra \
     texlive-fonts-recommended \
-    texlive-fonts-extra && \
+    texlive-fonts-extra \
+    texlive-xetex \
+    texlive-lang-cjk \
+    texlive-lang-chinese \
+    texlive-latex-recommended && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

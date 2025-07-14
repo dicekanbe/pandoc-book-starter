@@ -46,14 +46,47 @@ pandoc input.md --css=style.css -o output.html
 
 [リンク](https://example.com)
 
-![画像](image.png)
+![画像](img/image.png)
 ```
+
+[リンク](https://example.com)
+
+![画像](img/image.png)
+
+![テスト画像](img/test.png)
 
 ### 拡張構文
 
 本プロジェクトでは以下の拡張を使用します：
 
-- **テーブル**: GitHubスタイルのテーブル記法
+#### テーブル
+
+GitHubスタイルのテーブル記法
+
+```markdown
++-------+-------+
+| Header| Header|
++=======+=======+
+| cell  | cell  |
++--+----+-------+
+|^ | cell spanning
++--+----+-------+
+``` 
++-------+-------+
+| Header| Header|
++=======+=======+
+| cell  | cell  |
++--+----+-------+
+|^ | cell spanning
++--+----+-------+
+
+| TH 左寄せ | TH 中央寄せ | TH 右寄せ |
+| :--- | :---: | ---: |
+| TD | TD | TD |
+| TD | TD | TD |
+
+
+
 - **コードブロック**: シンタックスハイライト対応
 - **数式**: LaTeX記法による数式表現
 - **脚注**: 学術的な文書に対応
@@ -113,12 +146,23 @@ book.epub
 
 ### ワークフロー例
 
+マーメイドの画像は、以下のように表示されます。
+
 ```mermaid
 graph LR
     A[Push] --> B[Lint]
     B --> C[Build]
     C --> D[Test]
     D --> E[Deploy]
+```
+
+マーメイドの画像は、以下のように表示されます。
+
+```mermaid
+graph TD
+    A[Start] --> B[Lint]
+    B --> C[Build]
+
 ```
 
 ## まとめ

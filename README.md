@@ -1,185 +1,188 @@
 # Pandoc Book Starter
 
-Pandocを使用した技術書執筆のためのスターターテンプレート
+A starter template for technical book writing using Pandoc
 
-## 概要
+> [日本語版はこちら](README-jp.md) / [Japanese version is here](README-jp.md)
 
-このプロジェクトは、Pandocを使って効率的に技術書を執筆・出版するためのテンプレートです。Markdownで書いた原稿を、EPUB、PDF、HTMLなど複数の形式に変換できます。
+## Overview
 
-## 特徴
+This project is a template for efficiently writing and publishing technical books using Pandoc. You can convert manuscripts written in Markdown to multiple formats such as EPUB, PDF, and HTML.
 
-- 📝 **Markdownベースの執筆**: シンプルなMarkdown記法で執筆
-- 🌍 **多言語対応**: 日本語・英語など複数言語に対応
-- 📚 **複数出力形式**: EPUB、PDF、HTML出力をサポート
-- 🎨 **カスタマイズ可能なスタイル**: CSS、Luaフィルターによるカスタマイズ
-- 🔄 **CI/CD対応**: GitHub Actionsによる自動ビルド
-- 📖 **複数巻対応**: シリーズ本の管理が可能
+## Features
 
-## ファイル構成
+- 📝 **Markdown-based writing**: Write using simple Markdown syntax
+- 🌍 **Multi-language support**: Supports multiple languages including Japanese and English
+- 📚 **Multiple output formats**: Supports EPUB, PDF, and HTML output
+- 🎨 **Customizable styles**: Customization through CSS and Lua filters
+- 🔄 **CI/CD support**: Automated builds with GitHub Actions
+- 📖 **Multi-volume support**: Manage series books
+
+## File Structure
 
 ```
 pandoc-book-starter/
-├─ README.md              # このファイル
-├─ Makefile              # ビルド自動化（EPUB_OPTS/PDF_OPTS対応）
-├─ Dockerfile            # コンテナ環境（Node.js 20 + Mermaid CLI）
-├─ .textlintrc           # 文章校正設定
-├─ .gitignore            # Git除外設定
+├─ README.md              # This file
+├─ Makefile              # Build automation (EPUB_OPTS/PDF_OPTS support)
+├─ Dockerfile            # Container environment (Node.js 20 + Mermaid CLI)
+├─ .textlintrc           # Text linting configuration
+├─ .gitignore            # Git ignore settings
 ├─ .github/
 │  └─ workflows/
-│     └─ build.yml       # GitHub Actions設定（自動リリース対応）
-├─ shared/               # 共有リソース
-│  ├─ assets/           # スタイルとフォント
-│  │  ├─ epub.css       # EPUB用CSS
-│  │  ├─ web.css        # Web用CSS
-│  │  └─ fonts/         # フォントファイル
+│     └─ build.yml       # GitHub Actions configuration (auto-release support)
+├─ shared/               # Shared resources
+│  ├─ assets/           # Styles and fonts
+│  │  ├─ epub.css       # EPUB CSS
+│  │  ├─ web.css        # Web CSS
+│  │  └─ fonts/         # Font files
 │  │     ├─ FiraCode-Regular.ttf
 │  │     └─ NotoSansJP-Regular.otf
-│  └─ filters/          # Pandocフィルター
-│     ├─ autoid.lua     # 自動ID付与
-│     ├─ mermaid.lua    # Mermaid図表対応
-│     └─ number-chapter.lua # 章番号の多言語対応
-├─ vol1/                # 第1巻
-│  ├─ src/              # 原稿ファイル
-│  │  ├─ ja/            # 日本語版
-│  │  │  ├─ 00_01_preface.md      # はじめに
-│  │  │  ├─ 01_intro.md           # イントロダクション
-│  │  │  ├─ 02_keyword.md         # キーワード調査
-│  │  │  └─ 03_theme.md           # テーマについて
-│  │  └─ en/            # 英語版
+│  └─ filters/          # Pandoc filters
+│     ├─ autoid.lua     # Auto ID assignment
+│     ├─ mermaid.lua    # Mermaid diagram support
+│     └─ number-chapter.lua # Multi-language chapter numbering
+├─ vol1/                # Volume 1
+│  ├─ src/              # Manuscript files
+│  │  ├─ ja/            # Japanese version
+│  │  │  ├─ 00_01_preface.md      # Preface
+│  │  │  ├─ 01_intro.md           # Introduction
+│  │  │  ├─ 02_keyword.md         # Keyword research
+│  │  │  └─ 03_theme.md           # About the theme
+│  │  └─ en/            # English version
 │  │     └─ 01_theme.md           # Theme
-│  ├─ assets/           # 巻固有のアセット
-│  │  ├─ cover-ja.png   # 日本語版カバー
-│  │  └─ cover-en.png   # 英語版カバー
-│  └─ meta/             # メタデータ
-│     ├─ ja.yaml        # 日本語版設定
-│     ├─ en.yaml        # 英語版設定
-│     ├─ ja_title.txt   # 日本語版タイトル
-│     └─ en_title.txt   # 英語版タイトル
-└─ vol2/                # 第2巻（拡張用）
+│  ├─ assets/           # Volume-specific assets
+│  │  ├─ cover-ja.png   # Japanese cover
+│  │  └─ cover-en.png   # English cover
+│  └─ meta/             # Metadata
+│     ├─ ja.yaml        # Japanese settings
+│     ├─ en.yaml        # English settings
+│     ├─ ja_title.txt   # Japanese title
+│     └─ en_title.txt   # English title
+└─ vol2/                # Volume 2 (for expansion)
 ```
 
-## 必要な環境
+## Required Environment
 
-### 基本環境
+### Basic Environment
 
-- [Pandoc](https://pandoc.org/) 3.7.0.2以降
+- [Pandoc](https://pandoc.org/) 3.7.0.2 or later
 - [Make](https://www.gnu.org/software/make/)
-- [Node.js](https://nodejs.org/) 20.x以降
+- [Node.js](https://nodejs.org/) 20.x or later
 
-### オプション環境
+### Optional Environment
 
-- [Docker](https://www.docker.com/) （推奨: 環境統一のため）
-- [TeX Live](https://www.tug.org/texlive/) 2025 （PDF出力時）
-- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) 10.9.1以降
+- [Docker](https://www.docker.com/) (Recommended: for environment consistency)
+- [TeX Live](https://www.tug.org/texlive/) 2025 (for PDF output)
+- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) 10.9.1 or later
 
-## クイックスタート
+## Quick Start
 
-### 1. リポジトリのクローン
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/dicekanbe/pandoc-book-starter.git
 cd pandoc-book-starter
 ```
 
-### 2. 依存関係のインストール
+### 2. Install dependencies
 
-#### ローカル環境の場合
+#### For local environment
 ```bash
-# textlintのインストール
+# Install textlint
 npm install -g textlint@14.2.1
 npm install -g textlint-rule-preset-jtf-style@2.3.14
 ```
 
-#### Docker環境の場合（推奨）
+#### For Docker environment (Recommended)
 ```bash
-# Dockerイメージのビルド
+# Build Docker image
 docker build -t pandoc-book .
 ```
 
-### 3. ビルド実行
+### 3. Execute build
 
-#### ローカル環境
+#### Local environment
 ```bash
-# 利用可能なターゲットを確認
+# Check available targets
 make help
 
-# 日本語EPUB
+# Japanese EPUB
 make epub
 
-# 日本語PDF
+# Japanese PDF
 make pdf
 
-# 英語版
+# English version
 make epub-en
 make pdf-en
 
-# 全てのビルド
-make epub-all pdf-all
+# Build all
+make all
 ```
 
-#### Docker環境
+#### Docker environment
 ```bash
-# Dockerコンテナでビルド
+# Build with Docker container
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml -o /data/book.epub"
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 --css /data/shared/assets/epub.css \
+   --metadata-file meta/ja.yaml -o /data/book.epub"
 ```
 
-### 4. 出力ファイルの確認
+### 4. Check output files
 
-ビルドされたファイルは `build/` ディレクトリに出力されます。
+Built files are output to the `build/` directory.
 
-## 執筆ガイド
+## Writing Guide
 
-### 原稿の書き方
+### How to write manuscripts
 
-1. `vol1/src/ja/` または `vol1/src/en/` にMarkdownファイルを配置
-2. ファイル名は章番号で始める（例: `01_theme.md`, `02_keyword.md`）
-3. 見出しは `#` から開始
+1. Place Markdown files in `vol1/src/ja/` or `vol1/src/en/`
+2. Start file names with chapter numbers (e.g., `01_theme.md`, `02_keyword.md`)
+3. Start headings with `#`
 
-### メタデータの設定
+### Metadata configuration
 
-`vol1/meta/ja.yaml` または `vol1/meta/en.yaml` でメタデータを設定：
+Configure metadata in `vol1/meta/ja.yaml` or `vol1/meta/en.yaml`:
 
 ```yaml
-title: "書籍タイトル"
-author: "著者名"
-date: "出版日"
-description: "書籍の説明"
+title: "Book Title"
+author: "Author Name"
+date: "Publication Date"
+description: "Book Description"
 ```
 
-### スタイルのカスタマイズ
+### Style customization
 
-- EPUB用: `shared/assets/epub.css`
-- Web用: `shared/assets/web.css`
-- フィルター: `shared/filters/*.lua`
+- EPUB: `shared/assets/epub.css`
+- Web: `shared/assets/web.css`
+- Filters: `shared/filters/*.lua`
 
-## Docker環境の詳細
+## Docker Environment Details
 
-### Dockerイメージの構成
-- ベース: `pandoc/latex:latest-ubuntu`
+### Docker Image Configuration
+- Base: `pandoc/latex:latest-ubuntu`
 - Pandoc 3.7.0.2
 - Node.js 20.x
 - Mermaid CLI 10.9.1
-- 日本語フォント対応
+- Japanese font support
 
-### 使用例
+### Usage Examples
 ```bash
-# イメージのビルド
+# Build image
 docker build -t pandoc-book .
 
-# EPUBの生成
+# Generate EPUB
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 \
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 \
    --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml \
-   --epub-cover-image /data/vol1/assets/cover-ja.png \
+   --metadata-file meta/ja.yaml \
+   --epub-cover-image assets/cover-ja.png \
    -o /data/book.epub"
 
-# PDFの生成（日本語対応）
+# Generate PDF (Japanese support)
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to pdf \
+  "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
    --pdf-engine=lualatex \
+   --metadata-file=meta/ja.yaml \
    --metadata lang=ja \
    --metadata documentclass=article \
    --metadata mainfont='Noto Sans CJK JP' \
@@ -190,76 +193,76 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 
 ## CI/CD
 
-GitHub Actionsが自動的に：
+GitHub Actions automatically:
 
-1. **プッシュ時**:
-   - textlintによる校正を実行
-   - EPUB/PDFのビルドを実行
-   - EPUBCheckによる検証
-   - 成果物をアーティファクトとして保存
+1. **On push**:
+   - Run textlint for proofreading
+   - Execute EPUB/PDF builds
+   - Validate with EPUBCheck
+   - Save artifacts
 
-2. **タグプッシュ時**:
-   - 上記に加えて自動リリース作成
-   - GitHub ReleasesにEPUB/PDFを添付
-   - 日本語版・英語版の両方をリリース
+2. **On tag push**:
+   - Create automatic releases in addition to the above
+   - Attach EPUB/PDF to GitHub Releases
+   - Release both Japanese and English versions
 
-### リリースの作成方法
+### How to create releases
 ```bash
-# バージョンタグを作成
+# Create version tag
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-## カスタマイズ
+## Customization
 
-### 新しい巻の追加
+### Adding new volumes
 
-1. `vol2/`, `vol3/` などのディレクトリを作成
-2. `vol1/` と同じ構造でファイルを配置
-3. `Makefile` にビルドターゲットを追加
+1. Create directories like `vol2/`, `vol3/`, etc.
+2. Place files with the same structure as `vol1/`
+3. Add build targets to `Makefile`
 
-### 出力形式の追加
+### Adding output formats
 
-1. Pandocがサポートする形式を `Makefile` に追加
-2. 必要に応じてCSSやフィルターを作成
+1. Add formats supported by Pandoc to `Makefile`
+2. Create CSS and filters as needed
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題
+### Common Issues
 
-1. **フォントが見つからない（PDF）**:
-   - 解決策: システムフォントを使用するか、`shared/assets/fonts/` にフォントファイルを配置
-   - 日本語フォント: `Noto Sans CJK JP`, `Hiragino Sans`, `Yu Gothic`など
-   - コードブロック用: `Noto Sans Mono CJK JP`, `Source Han Code JP`など日本語対応等幅フォント
+1. **Font not found (PDF)**:
+   - Solution: Use system fonts or place font files in `shared/assets/fonts/`
+   - Japanese fonts: `Noto Sans CJK JP`, `Hiragino Sans`, `Yu Gothic`, etc.
+   - Code block fonts: `Noto Sans Mono CJK JP`, `Source Han Code JP`, etc. for Japanese-compatible monospace fonts
 
-2. **Mermaid図表が表示されない**:
-   - 解決策: `mermaid-cli` 10.9.1以降をインストール
-   - Docker環境では自動的にインストール済み
+2. **Mermaid diagrams not displaying**:
+   - Solution: Install `mermaid-cli` 10.9.1 or later
+   - Automatically installed in Docker environment
 
-3. **PDF生成エラー**:
-   - 解決策: TeX Live 2025をインストール、`article`クラスを使用
-   - 日本語PDF: LuaLaTeX + コマンドラインフォント指定を推奨
-   - `ltjsbook.cls`エラー: `--metadata documentclass=article`を使用
-   - コードブロック内の日本語文字エラー: `monofont`を日本語対応フォントに設定
+3. **PDF generation errors**:
+   - Solution: Install TeX Live 2025, use `article` class
+   - Japanese PDF: Recommended LuaLaTeX + command line font specification
+   - `ltjsbook.cls` error: Use `--metadata documentclass=article`
+   - Japanese characters in code blocks error: Set `monofont` to Japanese-compatible font
 
-4. **EPUB検証エラー**:
-   - 解決策: EPUBCheckで検証し、HTMLタグやCSSの問題を修正
-   - 画像ファイルの形式・サイズを確認
+4. **EPUB validation errors**:
+   - Solution: Validate with EPUBCheck and fix HTML tag and CSS issues
+   - Check image file format and size
 
-5. **GitHub Actions失敗**:
-   - 解決策: `GITHUB_TOKEN`の権限確認、ファイルパスの確認
-   - リリース作成時は`contents: write`権限が必要
+5. **GitHub Actions failures**:
+   - Solution: Check `GITHUB_TOKEN` permissions, verify file paths
+   - `contents: write` permission required for release creation
 
-6. **コードブロック内の日本語文字が表示されない**:
-   - 原因: 等幅フォント（monofont）が日本語に対応していない
-   - 解決策: `--metadata monofont='Noto Sans Mono CJK JP'`を追加
-   - 代替フォント: `Source Han Code JP`, `Ricty Diminished`など
+6. **Japanese characters not displaying in code blocks**:
+   - Cause: Monospace font (monofont) not compatible with Japanese
+   - Solution: Add `--metadata monofont='Noto Sans Mono CJK JP'`
+   - Alternative fonts: `Source Han Code JP`, `Ricty Diminished`, etc.
 
-7. **日本語PDF生成の完全な解決策**:
-   - 推奨コマンド（外部ファイル不要）:
+7. **Complete solution for Japanese PDF generation**:
+   - Recommended command (no external files required):
    ```bash
    docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-     "pandoc /data/vol1/src/ja/*.md --to pdf \
+     "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
       --pdf-engine=lualatex \
       --metadata lang=ja \
       --metadata documentclass=article \
@@ -268,25 +271,25 @@ git push origin v1.0.0
       --metadata monofont='Noto Sans Mono CJK JP' \
       -o /data/book.pdf"
    ```
-   - `ltjsbook.cls`エラーの場合: `article`クラスを使用
-   - フォント警告の場合: 3つのフォント（main/sans/mono）を全て指定
+   - For `ltjsbook.cls` errors: Use `article` class
+   - For font warnings: Specify all three fonts (main/sans/mono)
 
-### ログの確認
+### Checking logs
 
 ```bash
-# デバッグモードでビルド
+# Build in debug mode
 make epub PANDOC_OPTS="--verbose"
 
-# Docker環境でのデバッグ（EPUB）
+# Debug in Docker environment (EPUB)
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 --verbose \
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 --verbose \
    --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml \
+   --metadata-file meta/ja.yaml \
    -o /data/debug.epub"
 
-# Docker環境でのデバッグ（PDF・日本語フォント対応）
+# Debug in Docker environment (PDF with Japanese font support)
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to pdf  --verbose \
+  "cd /data/vol1 && pandoc src/ja/*.md --to pdf  --verbose \
    --pdf-engine=lualatex \
    --metadata lang=ja \
    --metadata documentclass=article \
@@ -296,11 +299,11 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
    -o /data/debug.pdf"
 ```
 
-### 環境別の設定
+### Environment-specific settings
 
 #### macOS
 ```bash
-# Homebrewでの環境構築
+# Environment setup with Homebrew
 brew install pandoc
 brew install --cask mactex
 npm install -g @mermaid-js/mermaid-cli
@@ -308,7 +311,7 @@ npm install -g @mermaid-js/mermaid-cli
 
 #### Ubuntu/Debian
 ```bash
-# システムパッケージでの環境構築
+# Environment setup with system packages
 sudo apt update
 sudo apt install pandoc texlive-full
 npm install -g @mermaid-js/mermaid-cli
@@ -316,35 +319,35 @@ npm install -g @mermaid-js/mermaid-cli
 
 #### Windows
 ```bash
-# Chocolateyでの環境構築
+# Environment setup with Chocolatey
 choco install pandoc
 choco install miktex
 npm install -g @mermaid-js/mermaid-cli
 ```
 
-## ライセンス
+## License
 
-Apache License 2.0 - 詳細は [LICENSE](LICENSE) ファイルを参照
+Apache License 2.0 - See [LICENSE](LICENSE) file for details
 
-## 貢献
+## Contributing
 
-プルリクエストやイシューの報告を歓迎します。
+Pull requests and issue reports are welcome.
 
-## 参考資料
+## References
 
-### 公式ドキュメント
-- [Pandoc User's Guide](https://pandoc.org/MANUAL.html) - Pandoc公式マニュアル
-- [Pandoc Lua Filters](https://pandoc.org/lua-filters.html) - Luaフィルター作成ガイド
-- [EPUB 3.3 Specification](https://www.w3.org/TR/epub-33/) - EPUB仕様書
-- [GitHub Actions Documentation](https://docs.github.com/en/actions) - GitHub Actions公式ドキュメント
+### Official Documentation
+- [Pandoc User's Guide](https://pandoc.org/MANUAL.html) - Pandoc official manual
+- [Pandoc Lua Filters](https://pandoc.org/lua-filters.html) - Lua filter creation guide
+- [EPUB 3.3 Specification](https://www.w3.org/TR/epub-33/) - EPUB specification
+- [GitHub Actions Documentation](https://docs.github.com/en/actions) - GitHub Actions official documentation
 
-### 技術資料
-- [Markdown記法](https://www.markdownguide.org/) - Markdown記法ガイド
-- [textlint](https://textlint.github.io/) - 文章校正ツール
-- [Mermaid](https://mermaid.js.org/) - 図表作成ツール
-- [LaTeX日本語処理](https://texwiki.texjp.org/) - LaTeX日本語組版
+### Technical Resources
+- [Markdown Guide](https://www.markdownguide.org/) - Markdown syntax guide
+- [textlint](https://textlint.github.io/) - Text linting tool
+- [Mermaid](https://mermaid.js.org/) - Diagram creation tool
+- [LaTeX Japanese Typesetting](https://texwiki.texjp.org/) - LaTeX Japanese typesetting
 
-### 関連ツール
-- [EPUBCheck](https://github.com/w3c/epubcheck) - EPUB検証ツール
-- [Calibre](https://calibre-ebook.com/) - 電子書籍管理ツール
-- [Sigil](https://sigil-ebook.com/) - EPUBエディタ
+### Related Tools
+- [EPUBCheck](https://github.com/w3c/epubcheck) - EPUB validation tool
+- [Calibre](https://calibre-ebook.com/) - E-book management tool
+- [Sigil](https://sigil-ebook.com/) - EPUB editor

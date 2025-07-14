@@ -35,6 +35,16 @@ This book is structured as follows:
 - Writing workflow
 - Publishing process
 
+### Workflow Example
+
+```mermaid
+graph LR
+    A[Push] --> B[Lint]
+    B --> C[Build]
+    C --> D[Test]
+    D --> E[Deploy]
+```
+
 ## Summary
 
 Through this theme, let's learn efficient and high-quality technical writing methods.

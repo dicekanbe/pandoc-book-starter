@@ -1,11 +1,11 @@
 ---
-title: "Pandoc技術書スターター"
-subtitle: "効率的な技術書執筆のためのワークフロー"
-author: 
+title: &title "Pandoc技術書スターター"
+subtitle: &subtitle "効率的な技術書執筆のためのワークフロー"
+author: &author
   - "著者名"
-date: "2025-06-30"
-lang: ja
-description: |
+date: &date "2025-06-30"
+lang: &lang "ja"
+description: &description |
   Pandocを使った効率的な技術書執筆方法を学ぶための実践的なガイドブック。
   マークダウンからEPUB、PDFへの変換、多言語対応、CI/CDによる自動化まで、
   現代的な技術書制作のワークフローを包括的に解説します。
@@ -48,16 +48,22 @@ header-includes: |
   \usepackage{xeCJK}
   \setCJKmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
 
-# 巻末情報
-colophon: |
-  本書は Pandoc Book Starter を使用して制作されました。
-  
-  - 執筆: Markdown
-  - 変換: Pandoc
-  - スタイリング: CSS
-  - 自動化: GitHub Actions
-  
-  初版発行: 2025年6月30日
+colophon:
+  book-title: *title
+  subtitle: *subtitle
+  publish-date: *date
+  edition: "初版 第一刷 発行"
+  author-label: "著作・発行"
+  publisher: *author
+  printer-label: "印刷"
+  printer: *author 
+  illustrator-label: "挿絵"
+  illustrator: ""  # 空の場合は表示されない
+  email-label: "メールアドレス"
+  email: "example@gmail.com"
+  web-label: "Web"
+  web: ""
+  disclaimer: "落丁・乱丁の際は在庫がある限りお取り替えいたします。上記のメールアドレスまでご連絡ください。"
 
 # リソースファイル
 resource-path:

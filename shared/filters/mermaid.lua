@@ -6,6 +6,14 @@ local system = require 'pandoc.system'
 -- Counter for unique filenames
 local mermaid_counter = 0
 
+-- Function to get current working directory
+function get_current_dir()
+  local handle = io.popen("pwd")
+  local result = handle:read("*a")
+  handle:close()
+  return result:gsub("\n$", "") -- Remove trailing newline
+end
+
 function CodeBlock(block)
   if block.classes[1] == "mermaid" then
     io.stderr:write("Processing mermaid block\n")
@@ -41,7 +49,7 @@ function CodeBlock(block)
       file:close()
       
       -- Convert mermaid to PNG using mermaid-cli (mmdc)
-      local command = string.format("mmdc -i %s -o %s -t neutral -b white --puppeteerConfigFile %s", tmp_file, png_file, config_file)
+      local command = string.format("mmdc -i %s -o %s -t neutral -b white -s 3 -w 1200 -H 400 --puppeteerConfigFile %s", tmp_file, png_file, config_file)
       io.stderr:write("Running command: " .. command .. "\n")
       local success = os.execute(command)
       
@@ -55,76 +63,87 @@ function CodeBlock(block)
         png_file_handle:close()
         
         io.stderr:write("PNG content length: " .. string.len(png_content) .. "\n")
+        
+        -- Increment counter for unique filename
+        mermaid_counter = mermaid_counter + 1
+        local image_filename = string.format("mermaid-%d.png", mermaid_counter)
+        
+        io.stderr:write("Creating permanent PNG file: " .. image_filename .. "\n")
+        
+        -- Create a permanent PNG file in the working directory
+        local permanent_png = io.open(image_filename, "wb")
+        if permanent_png then
+          permanent_png:write(png_content)
+          permanent_png:close()
           
-          -- For EPUB, we need to handle PNG differently
-          if FORMAT:match 'epub' then
-            io.stderr:write("Processing for EPUB format\n")
-            -- Increment counter for unique filename
-            mermaid_counter = mermaid_counter + 1
-            local image_filename = string.format("mermaid-%d.png", mermaid_counter)
-            
-            io.stderr:write("Creating permanent PNG file: " .. image_filename .. "\n")
-            
-            -- Create a permanent PNG file in the working directory
-            local permanent_png = io.open(image_filename, "wb")
-            if permanent_png then
-              permanent_png:write(png_content)
-              permanent_png:close()
-              
-              -- Clean up temporary files
-              os.remove(tmp_file)
-              os.remove(png_file)
-              os.remove(config_file)
-              
-              io.stderr:write("Returning image element\n")
-              
-              -- Return as Image element for EPUB
-              return pandoc.Para({
-                pandoc.Image(
-                  {pandoc.Str("Mermaid Diagram")}, -- alt text
-                  image_filename, -- src
-                  "Mermaid Diagram" -- title
-                )
-              })
-            else
-              io.stderr:write("Failed to create permanent PNG file\n")
-            end
-          else
-            io.stderr:write("Processing for HTML format\n")
-            -- For HTML output, create a permanent PNG file and return as image
-            -- Increment counter for unique filename
-            mermaid_counter = mermaid_counter + 1
-            local image_filename = string.format("mermaid-%d.png", mermaid_counter)
-            
-            io.stderr:write("Creating permanent PNG file: " .. image_filename .. "\n")
-            
-            -- Create a permanent PNG file in the working directory
-            local permanent_png = io.open(image_filename, "wb")
-            if permanent_png then
-              permanent_png:write(png_content)
-              permanent_png:close()
-              
-              -- Clean up temporary files
-              os.remove(tmp_file)
-              os.remove(png_file)
-              os.remove(config_file)
-              
-              -- Return as Image element for HTML
-              return pandoc.Para({
-                pandoc.Image(
-                  {pandoc.Str("Mermaid Diagram")}, -- alt text
-                  image_filename, -- src
-                  "Mermaid Diagram" -- title
-                )
-              })
-            else
-              io.stderr:write("Failed to create permanent PNG file\n")
-              -- Clean up temporary files
-              os.remove(tmp_file)
-              os.remove(png_file)
-              os.remove(config_file)
+          -- For LaTeX/PDF, also create image in build directory if needed
+          if FORMAT:match 'latex' or FORMAT:match 'pdf' then
+            io.stderr:write("Creating image in build directory for LaTeX/PDF\n")
+            local build_dirs = {"../build/vol1/ja", "../build/vol1/en"}
+            for _, build_dir in ipairs(build_dirs) do
+              -- Create build directory if it doesn't exist
+              os.execute("mkdir -p " .. build_dir)
+              -- Copy image to build directory
+              local build_image_path = build_dir .. "/" .. image_filename
+              local build_png = io.open(build_image_path, "wb")
+              if build_png then
+                build_png:write(png_content)
+                build_png:close()
+                io.stderr:write("Created image at: " .. build_image_path .. "\n")
+              end
             end
           end
+          
+          -- Clean up temporary files
+          os.remove(tmp_file)
+          os.remove(png_file)
+          os.remove(config_file)
+          
+          io.stderr:write("Returning image element for format: " .. FORMAT .. "\n")
+          
+          -- Handle different output formats
+          if FORMAT:match 'epub' then
+            io.stderr:write("Processing for EPUB format\n")
+            -- Return as Image element for EPUB
+            return pandoc.Para({
+              pandoc.Image(
+                {pandoc.Str("Mermaid Diagram")}, -- alt text
+                image_filename, -- src
+                "Mermaid Diagram" -- title
+              )
+            })
+          elseif FORMAT:match 'latex' or FORMAT:match 'pdf' then
+            io.stderr:write("Processing for LaTeX/PDF format\n")
+            -- For PDF output, use build directory path so LaTeX can find the image
+            local build_image_path = "../build/vol1/ja/" .. image_filename
+            io.stderr:write("Using build directory path for LaTeX: " .. build_image_path .. "\n")
+            
+            -- For PDF output, return as Image element that pandoc can convert to \includegraphics
+            return pandoc.Para({
+              pandoc.Image(
+                {pandoc.Str("Mermaid Diagram")}, -- alt text
+                build_image_path, -- src (relative to build directory)
+                "Mermaid Diagram" -- title
+              )
+            })
+          else
+            io.stderr:write("Processing for HTML format\n")
+            -- For HTML output, return as Image element
+            return pandoc.Para({
+              pandoc.Image(
+                {pandoc.Str("Mermaid Diagram")}, -- alt text
+                image_filename, -- src
+                "Mermaid Diagram" -- title
+              )
+            })
+          end
+        else
+          io.stderr:write("Failed to create permanent PNG file\n")
+          -- Clean up temporary files
+          os.remove(tmp_file)
+          os.remove(png_file)
+          os.remove(config_file)
+        end
       else
         io.stderr:write("mmdc command failed\n")
       end
@@ -142,14 +161,25 @@ function CodeBlock(block)
     io.stderr:write("Returning fallback content\n")
     
     -- If mermaid-cli is not available, return as a code block with a note
-    local fallback_content = string.format([[
+    if FORMAT:match 'latex' or FORMAT:match 'pdf' then
+      local fallback_content = string.format([[
+\begin{quote}
+\textbf{Note:} Mermaid diagram (install mermaid-cli to render)
+\begin{verbatim}
+%s
+\end{verbatim}
+\end{quote}
+]], block.text)
+      return pandoc.RawBlock("latex", fallback_content)
+    else
+      local fallback_content = string.format([[
 <div class="mermaid-fallback">
 <p><strong>Note:</strong> Mermaid diagram (install mermaid-cli to render)</p>
 <pre><code class="language-mermaid">%s</code></pre>
 </div>
 ]], block.text)
-    
-    return pandoc.RawBlock("html", fallback_content)
+      return pandoc.RawBlock("html", fallback_content)
+    end
   end
   
   return block
