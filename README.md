@@ -114,15 +114,15 @@ make epub-en
 make pdf-en
 
 # 全てのビルド
-make epub-all pdf-all
+make all
 ```
 
 #### Docker環境
 ```bash
 # Dockerコンテナでビルド
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml -o /data/book.epub"
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 --css /data/shared/assets/epub.css \
+   --metadata-file meta/ja.yaml -o /data/book.epub"
 ```
 
 ### 4. 出力ファイルの確認
@@ -170,16 +170,17 @@ docker build -t pandoc-book .
 
 # EPUBの生成
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 \
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 \
    --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml \
-   --epub-cover-image /data/vol1/assets/cover-ja.png \
+   --metadata-file meta/ja.yaml \
+   --epub-cover-image assets/cover-ja.png \
    -o /data/book.epub"
 
 # PDFの生成（日本語対応）
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to pdf \
+  "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
    --pdf-engine=lualatex \
+   --metadata-file=meta/ja.yaml \
    --metadata lang=ja \
    --metadata documentclass=article \
    --metadata mainfont='Noto Sans CJK JP' \
@@ -259,7 +260,7 @@ git push origin v1.0.0
    - 推奨コマンド（外部ファイル不要）:
    ```bash
    docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-     "pandoc /data/vol1/src/ja/*.md --to pdf \
+     "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
       --pdf-engine=lualatex \
       --metadata lang=ja \
       --metadata documentclass=article \
@@ -279,14 +280,14 @@ make epub PANDOC_OPTS="--verbose"
 
 # Docker環境でのデバッグ（EPUB）
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to epub3 --verbose \
+  "cd /data/vol1 && pandoc src/ja/*.md --to epub3 --verbose \
    --css /data/shared/assets/epub.css \
-   --metadata-file /data/vol1/meta/ja.yaml \
+   --metadata-file meta/ja.yaml \
    -o /data/debug.epub"
 
 # Docker環境でのデバッグ（PDF・日本語フォント対応）
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "pandoc /data/vol1/src/ja/*.md --to pdf  --verbose \
+  "cd /data/vol1 && pandoc src/ja/*.md --to pdf  --verbose \
    --pdf-engine=lualatex \
    --metadata lang=ja \
    --metadata documentclass=article \
