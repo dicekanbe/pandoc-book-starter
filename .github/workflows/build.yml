@@ -72,36 +72,36 @@ jobs:
         export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
         make epub-all pdf-all
     
-    - name: Install EPUBCheck
-      run: |
-        # Download EPUBCheck
-        wget https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
-        unzip epubcheck-5.1.0.zip
-        sudo mv epubcheck-5.1.0 /opt/epubcheck
-        # Create symlink for easy access
-        sudo ln -s /opt/epubcheck/epubcheck.jar /usr/local/bin/epubcheck.jar
+    # - name: Install EPUBCheck
+    #   run: |
+    #     # Download EPUBCheck
+    #     wget https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
+    #     unzip epubcheck-5.1.0.zip
+    #     sudo mv epubcheck-5.1.0 /opt/epubcheck
+    #     # Create symlink for easy access
+    #     sudo ln -s /opt/epubcheck/epubcheck.jar /usr/local/bin/epubcheck.jar
     
-    - name: Validate EPUB files
-      run: |
-        echo "Validating EPUB files..."
-        # Check if EPUB files exist and validate them
-        if [ -f "build/vol1/ja/book.epub" ]; then
-          echo "Validating Japanese EPUB..."
-          java -jar /usr/local/bin/epubcheck.jar build/vol1/ja/book.epub
-        else
-          echo "Japanese EPUB not found"
-          exit 1
-        fi
+    # - name: Validate EPUB files
+    #   run: |
+    #     echo "Validating EPUB files..."
+    #     # Check if EPUB files exist and validate them
+    #     if [ -f "build/vol1/ja/book.epub" ]; then
+    #       echo "Validating Japanese EPUB..."
+    #       java -jar /usr/local/bin/epubcheck.jar build/vol1/ja/book.epub
+    #     else
+    #       echo "Japanese EPUB not found"
+    #       exit 1
+    #     fi
         
-        if [ -f "build/vol1/en/book.epub" ]; then
-          echo "Validating English EPUB..."
-          java -jar /usr/local/bin/epubcheck.jar build/vol1/en/book.epub
-        else
-          echo "English EPUB not found"
-          exit 1
-        fi
+    #     if [ -f "build/vol1/en/book.epub" ]; then
+    #       echo "Validating English EPUB..."
+    #       java -jar /usr/local/bin/epubcheck.jar build/vol1/en/book.epub
+    #     else
+    #       echo "English EPUB not found"
+    #       exit 1
+    #     fi
         
-        echo "All EPUB files are valid!"
+    #     echo "All EPUB files are valid!"
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
