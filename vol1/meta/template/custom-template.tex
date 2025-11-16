@@ -42,6 +42,8 @@
 
 \usepackage{longtable,booktabs,array}
 \usepackage{calc}
+% Workaround for pandoc table conversion bug: define missing 'none' counter
+\newcounter{none}
 
 \usepackage[]{tcolorbox}
 \tcbuselibrary{breakable,theorems,skins}
