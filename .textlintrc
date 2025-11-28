@@ -1,15 +1,4 @@
 {
-  "filters": {
-    "textlint-rule-preset-ja-technical-writing": true,
-    "textlint-rule-preset-ja-spacing": {
-      "ja-space-between-half-and-full-width": {
-        "space": "always"
-      }
-    },
-    "textlint-rule-prh": {
-      "rulePaths": ["./prh.yml"]
-    }
-  },
   "rules": {
     "textlint-rule-preset-ja-technical-writing": {
       "no-exclamation-question-mark": false,
@@ -17,6 +6,14 @@
         "strict": false,
         "allow": ["も", "や", "か"]
       }
+    },
+    "textlint-rule-preset-ja-spacing": {
+      "ja-space-between-half-and-full-width": {
+        "space": "always"
+      }
+    },
+    "textlint-rule-prh": {
+      "rulePaths": ["./prh.yml"]
     }
   }
 }
