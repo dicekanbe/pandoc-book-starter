@@ -1,16 +1,7 @@
 -- Auto ID Filter for Pandoc
 -- This filter automatically adds IDs to headers for cross-referencing
 
-function Header(elem)
-  if elem.identifier == "" then
-    -- Generate ID from header text
-    local id = pandoc.utils.stringify(elem.content):lower()
-    id = id:gsub("%s+", "-")  -- Replace spaces with hyphens
-    id = id:gsub("[^%w%-]", "")  -- Remove non-alphanumeric characters except hyphens
-    elem.identifier = id
-  end
-  return elem
-end
+
 
 function Div(elem)
   -- Add special handling for div elements with specific classes
