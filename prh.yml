@@ -1,4 +1,4 @@
 version: 1
 rules:
-  - expected: Pandoc
-    pattern: pandoc
+  - expected: Japanese
+    pattern: japanese
