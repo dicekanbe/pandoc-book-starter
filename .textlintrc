@@ -2,9 +2,14 @@
   "rules": {
     "textlint-rule-preset-ja-technical-writing": {
       "no-exclamation-question-mark": false,
+      "ja-no-weak-phrase": false,
       "no-doubled-joshi": {
         "strict": false,
-        "allow": ["も", "や", "か"]
+        "allow": [
+          "も",
+          "や",
+          "か"
+        ]
       }
     },
     "textlint-rule-preset-ja-spacing": {
@@ -12,8 +17,12 @@
         "space": "always"
       }
     },
+    "@textlint-ja/preset-ai-writing": true,
+    "textlint-rule-spellcheck-tech-word": true,
     "textlint-rule-prh": {
-      "rulePaths": ["./prh.yml"]
+      "rulePaths": [
+        "./prh.yml"
+      ]
     }
   }
 }
