@@ -38,8 +38,12 @@ help:
 	@echo "  pdf-all      - Build all PDF versions"
 	@echo "  clean        - Clean build directory"
 	@echo "  help         - Show this help"
+	@echo "  lint         - Run textlint"
 
 # Build targets
+lint:
+	@echo "Running textlint..."
+	npx textlint vol1/src/ja/*.md
 epub:
 	@echo "Building Japanese version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
