@@ -45,8 +45,8 @@ header-includes: |
   \usepackage{fontspec}
   \setmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
   \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
-  \usepackage{xeCJK}
-  \setCJKmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
+  \usepackage{luatexja-fontspec}
+  \setmainjfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
 
 colophon:
   book-title: *title

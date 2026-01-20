@@ -88,8 +88,15 @@ cd pandoc-book-starter
 #### ローカル環境の場合
 ```bash
 # textlintのインストール
-npm install -g textlint@14.2.1
-npm install -g textlint-rule-preset-jtf-style@2.3.14
+npm install -g textlint@15.4.0
+npm install -g @textlint-ja/textlint-rule-preset-ai-writing@1.6.1
+npm install -g textlint-rule-max-ten@5.0.0
+npm install -g textlint-rule-no-mix-dearu-desumasu@6.0.4
+npm install -g textlint-rule-preset-ja-spacing@2.4.3
+npm install -g textlint-rule-preset-ja-technical-writing@12.0.2
+npm install -g textlint-rule-preset-jtf-style@3.0.3
+npm install -g textlint-rule-prh@6.1.0
+npm install -g textlint-rule-spellcheck-tech-word@5.0.0
 ```
 
 #### Docker環境の場合（推奨）

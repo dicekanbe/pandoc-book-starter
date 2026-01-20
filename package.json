@@ -1,0 +1,32 @@
+{
+  "name": "pandoc-book-starter",
+  "version": "1.0.0",
+  "description": "A starter template for technical book writing using Pandoc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "textlint": "textlint 'vol1/src/ja/*.md'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dicekanbe/pandoc-book-starter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dicekanbe/pandoc-book-starter/issues"
+  },
+  "homepage": "https://github.com/dicekanbe/pandoc-book-starter#readme",
+  "devDependencies": {
+    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
+    "textlint": "^15.4.0",
+    "textlint-rule-max-ten": "^5.0.0",
+    "textlint-rule-no-mix-dearu-desumasu": "^6.0.4",
+    "textlint-rule-preset-ja-spacing": "^2.4.3",
+    "textlint-rule-preset-ja-technical-writing": "^12.0.2",
+    "textlint-rule-preset-jtf-style": "^3.0.3",
+    "textlint-rule-prh": "^6.1.0",
+    "textlint-rule-spellcheck-tech-word": "^5.0.0"
+  }
+}
