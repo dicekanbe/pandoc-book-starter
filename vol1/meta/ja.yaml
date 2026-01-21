@@ -40,7 +40,7 @@ linkcolor: blue
 urlcolor: blue
 toccolor: black
 
-# カスタムヘッダー
+# カスタムヘッダー (LaTeX/PDF専用)
 header-includes: |
   \usepackage{luatexja-fontspec}
 
