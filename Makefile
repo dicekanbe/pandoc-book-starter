@@ -18,8 +18,8 @@ EPUB_OPTS = --to=epub3 \
 	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
-	--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
-	-M header-includes=
+	--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf
+
 
 PDF_OPTS = --to=pdf \
 	--metadata lang=ja \
@@ -29,7 +29,8 @@ PDF_OPTS = --to=pdf \
 	--pdf-engine=lualatex \
 	--top-level-division=chapter \
 	--template=meta/template/custom-template.tex \
-	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua
+	--toc \
+	--toc-depth=3
 
 # Help target
 help:
