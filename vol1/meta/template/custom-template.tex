@@ -114,158 +114,51 @@
 \usetikzlibrary{shapes.geometric, arrows.meta, decorations.pathmorphing}
 
 % 見出しデザインのカスタマイズ
-\usepackage{titlesec}
+\usepackage[explicit]{titlesec}
 
-% 章（Chapter）のデザイン
-\titleformat{\chapter}[display]
-  {\normalfont\huge\bfseries\centering$if(heading-style.chapter-color)$\color{$heading-style.chapter-color$}$endif$}
-  {\chaptertitlename\thechapter}
-  {20pt}
-  {\Huge}
-
-% 節（Section）のデザイン - パターン1: シンプルな線付き
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\thesection}
-%   {1em}
-%   {\hrule height 0.4pt \vspace{2pt}}
-
-% 節（Section）のデザイン - パターン2: カラーボックス付き（元のデザイン）
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\colorbox{$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$black$endif$}{\textcolor{$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$}{\arabic{section}}}}\hspace{0.5em}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン3: 下線付き
+% 節（Section）のデザイン
 \titleformat{\section}
   {\normalfont\Large\bfseries}
-  {\thesection}
-  {1em}
-  {\underline}
-
-% 節（Section）のデザイン - パターン4: 左側に色付きバー
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\textcolor{blue}{\rule{3pt}{1.2em}}\hspace{5pt}\thesection}}
-%   {1em}
-%   {}
-
-% 節（Section）のデザイン - パターン5: 上下に線、中央寄せ
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries\centering}
-%   {}
-%   {0pt}
-%   {\vspace{-1em}\hrule height 0.8pt \vspace{0.5em}\thesection\quad}
-%   [\vspace{0.5em}\hrule height 0.8pt]
-
-% 節（Section）のデザイン - パターン6: 角丸ボックス
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\fcolorbox{gray}{lightgray}{\makebox[2em]{\thesection}}\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン7: 番号を大きく、タイトルを小さく
-% \titleformat{\section}
-%   {\normalfont\bfseries}
-%   {\fontsize{24}{28}\selectfont\color{gray}\thesection}
-%   {0.5em}
-%   {\fontsize{16}{20}\selectfont}
-
-% 節（Section）のデザイン - パターン8: 装飾的な線と番号
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\textcolor{$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$}{\rule{0.5pt}{1.2em}}\hspace{3pt}\colorbox{$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$}{\textcolor{$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$}{\small\thesection}}\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン9: 影付きボックス
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\fcolorbox{black}{white}{\makebox[2em]{\thesection}}\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン10: 二重線
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\thesection}
-%   {1em}
-%   {}
-%   [\vspace{0.2em}{\hrule height 0.4pt}\vspace{0.1em}{\hrule height 0.4pt}]
-
-% 節（Section）のデザイン - パターン11: 角丸のカラーボックス
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\tikz[baseline=(text.base)]{%
-%     \node[rectangle, rounded corners=3pt, fill=$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$, 
-%           text=$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$, 
-%           inner sep=3pt, minimum width=1.5em] (text) {\footnotesize\thesection};%
-%   }\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン12: 矢印付き
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\tikz[baseline=(text.base)]{%
-%     \node[single arrow, fill=$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$, 
-%           text=$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$, 
-%           inner sep=2pt, minimum width=1.5em, single arrow head extend=0.1em] (text) {\footnotesize\thesection};%
-%   }\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン13: 波線付き
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\thesection}
-%   {1em}
-%   {}
-%   [\vspace{0.3em}\tikz{\draw[thick, $if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$, 
-%      decoration={snake, amplitude=0.5mm, segment length=2mm}, decorate] (0,0) -- (\textwidth,0);}]
-
-% 節（Section）のデザイン - パターン14: 六角形
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\tikz[baseline=(text.base)]{%
-%     \node[regular polygon, regular polygon sides=6, fill=$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$, 
-%           text=$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$, 
-%           inner sep=2pt, minimum width=1.5em] (text) {\footnotesize\thesection};%
-%   }\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
-% 節（Section）のデザイン - パターン15: グラデーション風
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}
-%   {\llap{\tikz[baseline=(text.base)]{%
-%     \shade[left color=$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$, 
-%            right color=$if(heading-style.section-bg-color)$$heading-style.section-bg-color$$else$blue$endif$!30] 
-%            (0,0) rectangle (1.5em,1.2em);%
-%     \node[text=$if(heading-style.section-text-color)$$heading-style.section-text-color$$else$white$endif$] at (0.75em,0.6em) {\footnotesize\thesection};%
-%   }\hspace{0.5em}}}
-%   {0pt}
-%   {}
-
+  {\thesection\hspace{1em}}
+  {0pt}
+  {#1}
 
 % 小節（Subsection）のデザイン
 \titleformat{\subsection}
   {\normalfont\large\bfseries}
-  {\thesubsection}
-  {1em}
-  {$if(heading-style.subsection-underline)$\underline$endif$}
+  {\thesubsection\hspace{1em}}
+  {0pt}
+  {#1}
 
 % 段落（Subsubsection）のデザイン
 \titleformat{\subsubsection}
   {\normalfont\normalsize\bfseries}
-  {\thesubsubsection}
-  {1em}
-  {}
+  {\thesubsubsection\hspace{1em}}
+  {0pt}
+  {#1}
 
 % 目次に出すのを節（見出しレベル1）までにする
 \setcounter{tocdepth}{1}
+
+% etoolbox を使用
+\usepackage{etoolbox}
+
+% jlreq の章設定：デフォルトで番号付き
+\ModifyHeading{chapter}{
+  label_format={第\thechapter 章\hspace{1em}}
+}
+
+% 番号なし章（\chapter*）のラベルを空にする
+\makeatletter
+\let\jlreq@original@schapter\@schapter
+\renewcommand{\@schapter}[1]{%
+  % 一時的に label_format を空に
+  \ModifyHeading{chapter}{label_format={}}%
+  \jlreq@original@schapter{#1}%
+  % 元に戻す
+  \ModifyHeading{chapter}{label_format={第\thechapter 章\hspace{1em}}}%
+}
+\makeatother
 
 \begin{document}
 
