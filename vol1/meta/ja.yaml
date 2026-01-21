@@ -42,11 +42,66 @@ toccolor: black
 
 # カスタムヘッダー
 header-includes: |
-  \usepackage{fontspec}
-  \setmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
-  \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
   \usepackage{luatexja-fontspec}
-  \setmainjfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
+
+  % 和文フォント (NotoSansJP)
+  \setmainjfont[
+    Path=../shared/assets/fonts/,
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Regular,
+    BoldItalicFont=*-Bold,
+    ItalicFeatures={FakeSlant=0.2},
+    BoldItalicFeatures={FakeSlant=0.2}
+  ]{NotoSansJP}
+
+  \setsansjfont[
+    Path=../shared/assets/fonts/,
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold
+  ]{NotoSansJP}
+
+  % 欧文フォント (NotoSansJP)
+  \setmainfont[
+    Path=../shared/assets/fonts/,
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Regular,
+    BoldItalicFont=*-Bold,
+    ItalicFeatures={FakeSlant=0.2},
+    BoldItalicFeatures={FakeSlant=0.2}
+  ]{NotoSansJP}
+
+  \setsansfont[
+    Path=../shared/assets/fonts/,
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold
+  ]{NotoSansJP}
+
+  % 等幅フォント - コード用 (FiraCode)
+  \setmonofont[
+    Path=../shared/assets/fonts/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Regular,
+    BoldItalicFont=*-Bold,
+    ItalicFeatures={FakeSlant=0.2},
+    BoldItalicFeatures={FakeSlant=0.2},
+    Scale=0.9
+  ]{FiraCode}
+
+  % 和文等幅フォント - コード内日本語用
+  \setmonojfont[
+    Path=../shared/assets/fonts/,
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold
+  ]{NotoSansJP}
 
 colophon:
   book-title: *title
