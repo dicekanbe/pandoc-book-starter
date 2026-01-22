@@ -143,22 +143,10 @@
 % etoolbox を使用
 \usepackage{etoolbox}
 
-% jlreq の章設定：デフォルトで番号付き
+% jlreq の章設定
 \ModifyHeading{chapter}{
   label_format={第\thechapter 章\hspace{1em}}
 }
-
-% 番号なし章（\chapter*）のラベルを空にする
-\makeatletter
-\let\jlreq@original@schapter\@schapter
-\renewcommand{\@schapter}[1]{%
-  % 一時的に label_format を空に
-  \ModifyHeading{chapter}{label_format={}}%
-  \jlreq@original@schapter{#1}%
-  % 元に戻す
-  \ModifyHeading{chapter}{label_format={第\thechapter 章\hspace{1em}}}%
-}
-\makeatother
 
 \begin{document}
 
