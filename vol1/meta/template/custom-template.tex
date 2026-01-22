@@ -26,11 +26,10 @@
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
+% 必要に応じて画像を拡大縮小し、デフォルトでページ余白からはみ出さないようにする
+% \includegraphics[width, height, ...]{} の明示的オプションで上書きすることもできる
 \setkeys{Gin}{width=0.8\textwidth,height=0.2\textheight,keepaspectratio}
-% Set default figure placement to htbp
+% 図の配置先の既定を htbp にする
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
@@ -42,19 +41,19 @@
 
 \usepackage{longtable,booktabs,array}
 \usepackage{calc}
-% Workaround for pandoc table conversion bug: define missing 'none' counter
+% pandoc の表変換バグへの対処: 欠落している 'none' カウンタを定義
 \newcounter{none}
 
 \usepackage[]{tcolorbox}
 \tcbuselibrary{breakable,theorems,skins}
 
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % 利用可能なら URL の改行を有効化
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same} % URL に等幅フォントを使わない
 \usepackage{color}
 \usepackage{fancyvrb}
 
@@ -64,7 +63,7 @@
 % ここからソースコードを挿入するための設定
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-% Add ',fontsize=\small' for more characters per line
+% 1 行あたりの文字数を増やすには ',fontsize=\small' を追加
 \newenvironment{Shaded}{}{}
 \newcommand{\AlertTok}[1]{\textbf{#1}}
 \newcommand{\AnnotationTok}[1]{\textit{#1}}
