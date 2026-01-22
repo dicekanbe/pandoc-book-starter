@@ -7,11 +7,6 @@
 --   chapter-suffix   : "章 "  （既定値）
 --   chapter-start    : 1      （既定値; 0 から始めたい場合などに）
 --   unnumbered-class : "unnumbered"  （見出しに付いていればスキップ）
---
--- 注意: PDF/LaTeX出力時は番号付けをスキップ（LaTeX側で管理するため）
-
--- PDF/LaTeX出力かどうかを判定
-local is_latex_output = FORMAT:match("latex") or FORMAT:match("pdf") or FORMAT:match("beamer")
 
 local chapter_counter = 0
 local section_counter = {}
@@ -100,11 +95,6 @@ end
 
 -- Header ブロックを変換
 function Header(el)
-  -- PDF/LaTeX出力時は番号付けをスキップ（LaTeX側で管理）
-  if is_latex_output then
-    return el
-  end
-
   -- レベル 1〜3 を対象にしたい場合
   if el.level > 3 then return nil end
 
