@@ -116,24 +116,34 @@
 % 見出しデザインのカスタマイズ
 \usepackage[explicit]{titlesec}
 
-% 節（Section）のデザイン
+% LaTeX側の番号付けを完全に無効化（Luaフィルターで管理）
+\setcounter{secnumdepth}{-2}
+
+% 章（Chapter）のデザイン - 番号なし
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}
+  {}
+  {0pt}
+  {#1}
+
+% 節（Section）のデザイン - 番号なし
 \titleformat{\section}
   {\normalfont\Large\bfseries}
-  {\thesection\hspace{1em}}
+  {}
   {0pt}
   {#1}
 
-% 小節（Subsection）のデザイン
+% 小節（Subsection）のデザイン - 番号なし
 \titleformat{\subsection}
   {\normalfont\large\bfseries}
-  {\thesubsection\hspace{1em}}
+  {}
   {0pt}
   {#1}
 
-% 段落（Subsubsection）のデザイン
+% 段落（Subsubsection）のデザイン - 番号なし
 \titleformat{\subsubsection}
   {\normalfont\normalsize\bfseries}
-  {\thesubsubsection\hspace{1em}}
+  {}
   {0pt}
   {#1}
 
@@ -142,11 +152,6 @@
 
 % etoolbox を使用
 \usepackage{etoolbox}
-
-% jlreq の章設定
-\ModifyHeading{chapter}{
-  label_format={第\thechapter 章\hspace{1em}}
-}
 
 \begin{document}
 
