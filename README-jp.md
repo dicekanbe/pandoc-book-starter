@@ -21,10 +21,13 @@ Pandocを使用した技術書執筆のためのスターターテンプレー�
 
 ```
 pandoc-book-starter/
-├─ README.md              # このファイル
+├─ README.md              # プロジェクト説明（英語版）
+├─ README-jp.md          # プロジェクト説明（日本語版）
 ├─ Makefile              # ビルド自動化（EPUB_OPTS/PDF_OPTS対応）
-├─ Dockerfile            # コンテナ環境（Node.js 22 + Mermaid CLI）
-├─ .textlintrc           # 文章校正設定
+├─ Dockerfile            # コンテナ環境（texlive-pandoc-ja + Node.js 22）
+├─ package.json          # Node.js依存関係
+├─ .textlintrc           # textlint文章校正設定
+├─ prh.yml               # 表記ゆれ辞書
 ├─ .gitignore            # Git除外設定
 ├─ .github/
 │  └─ workflows/
@@ -40,31 +43,33 @@ pandoc-book-starter/
 │     ├─ autoid.lua     # 自動ID付与
 │     ├─ mermaid.lua    # Mermaid図表対応
 │     └─ number-chapter.lua # 章番号の多言語対応
-├─ vol1/                # 第1巻
-│  ├─ src/              # 原稿ファイル
-│  │  ├─ ja/            # 日本語版
-│  │  │  ├─ 00_01_preface.md      # はじめに
-│  │  │  ├─ 01_intro.md           # イントロダクション
-│  │  │  ├─ 02_keyword.md         # キーワード調査
-│  │  │  └─ 03_theme.md           # テーマについて
-│  │  └─ en/            # 英語版
-│  │     └─ 01_theme.md           # Theme
-│  ├─ assets/           # 巻固有のアセット
-│  │  ├─ cover-ja.png   # 日本語版カバー
-│  │  └─ cover-en.png   # 英語版カバー
-│  └─ meta/             # メタデータ
-│     ├─ ja.yaml        # 日本語版設定
-│     ├─ en.yaml        # 英語版設定
-│     ├─ ja_title.txt   # 日本語版タイトル
-│     └─ en_title.txt   # 英語版タイトル
-└─ vol2/                # 第2巻（拡張用）
+└─ vol1/                # 第1巻
+   ├─ src/              # 原稿ファイル
+   │  ├─ ja/            # 日本語版
+   │  │  ├─ 00_01_preface.md      # はじめに
+   │  │  ├─ 01_intro.md           # イントロダクション
+   │  │  ├─ 02_keyword.md         # キーワード調査
+   │  │  ├─ 03_theme.md           # テーマについて
+   │  │  └─ img/                  # 画像ファイル
+   │  └─ en/            # 英語版
+   │     └─ 01_theme.md           # Theme
+   ├─ assets/           # 巻固有のアセット
+   │  ├─ cover-ja.png   # 日本語版カバー
+   │  └─ cover-en.png   # 英語版カバー
+   ├─ meta/             # メタデータ
+   │  ├─ ja.yaml        # 日本語版設定
+   │  ├─ en.yaml        # 英語版設定
+   │  └─ template/      # カスタムテンプレート
+   │     └─ custom-template.tex  # LaTeXテンプレート
+   ├─ img/              # 共通画像ファイル
+   └─ input.ltjruby     # LuaTeX-ja Ruby設定
 ```
 
 ## 必要な環境
 
 ### 基本環境
 
-- [Pandoc](https://pandoc.org/) 3.8.3以降
+- [Pandoc](https://pandoc.org/) 3.7以降
 - [Make](https://www.gnu.org/software/make/)
 - [Node.js](https://nodejs.org/) 22.x以降
 
@@ -87,16 +92,22 @@ cd pandoc-book-starter
 
 #### ローカル環境の場合
 ```bash
-# textlintのインストール
-npm install -g textlint@15.4.0
-npm install -g @textlint-ja/textlint-rule-preset-ai-writing@1.6.1
-npm install -g textlint-rule-max-ten@5.0.0
-npm install -g textlint-rule-no-mix-dearu-desumasu@6.0.4
-npm install -g textlint-rule-preset-ja-spacing@2.4.3
-npm install -g textlint-rule-preset-ja-technical-writing@12.0.2
-npm install -g textlint-rule-preset-jtf-style@3.0.3
-npm install -g textlint-rule-prh@6.1.0
-npm install -g textlint-rule-spellcheck-tech-word@5.0.0
+# Node.jsパッケージのインストール
+npm install
+
+# または、グローバルにtextlintをインストール
+npm install -g textlint@15.4.0 \
+  @textlint-ja/textlint-rule-preset-ai-writing@1.6.1 \
+  textlint-rule-max-ten@5.0.0 \
+  textlint-rule-no-mix-dearu-desumasu@6.0.4 \
+  textlint-rule-preset-ja-spacing@2.4.3 \
+  textlint-rule-preset-ja-technical-writing@12.0.2 \
+  textlint-rule-preset-jtf-style@3.0.3 \
+  textlint-rule-prh@6.1.0 \
+  textlint-rule-spellcheck-tech-word@5.0.0
+
+# textlintで文章校正
+npm run textlint
 ```
 
 #### Docker環境の場合（推奨）
@@ -118,9 +129,13 @@ make epub
 # 日本語PDF
 make pdf
 
-# 英語版
+# 英語版EPUB/PDF
 make epub-en
 make pdf-en
+
+# 全EPUB/全PDF
+make epub-all
+make pdf-all
 
 # 全てのビルド
 make all
@@ -166,11 +181,12 @@ description: "書籍の説明"
 ## Docker環境の詳細
 
 ### Dockerイメージの構成
-- ベース: `pandoc/latex:latest-ubuntu`
-- Pandoc 3.8.3
+- ベース: `tecolicom/texlive-pandoc-ja:latest`
+- Pandoc（最新版）
+- TeX Live（日本語対応）
 - Node.js 22.x
 - Mermaid CLI 10.9.1
-- 日本語フォント対応
+- 日本語フォント（Noto CJK、Noto Mono）対応
 
 ### 使用例
 ```bash
@@ -203,9 +219,8 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 GitHub Actionsが自動的に：
 
 1. **プッシュ時**:
-   - textlintによる校正を実行
-   - EPUB/PDFのビルドを実行
-   - EPUBCheckによる検証
+   - EPUB/PDFのビルドを実行（Pandoc 3.7.0.2使用）
+   - Mermaid図表の変換
    - 成果物をアーティファクトとして保存
 
 2. **タグプッシュ時**:
