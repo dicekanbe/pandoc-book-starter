@@ -287,7 +287,6 @@ git push origin v1.0.0
 7. **日本語PDF生成の完全な解決策**:
    - 推奨コマンド（カスタムテンプレート使用）:
    ```bash
-   ```bash
    docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
       "cd /data/vol1 && pandoc src/ja/*.md \
        --metadata lang=ja \
@@ -301,7 +300,6 @@ git push origin v1.0.0
        --toc-depth=3 \
        --metadata-file=meta/ja.yaml \
        -o /data/book.pdf"
-   ```
    ```
    - カスタムテンプレートでフォントやレイアウトを制御
    - Luaフィルターで章番号やMermaid図表を処理
@@ -320,7 +318,6 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
    -o /data/debug.epub"
 
 # Docker環境でのデバッグ（PDF）
-```bash
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
    "cd /data/vol1 && pandoc src/ja/*.md --verbose \
     --metadata lang=ja \

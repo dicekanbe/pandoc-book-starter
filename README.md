@@ -204,14 +204,17 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 
 # Generate PDF (Japanese support)
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
-   --pdf-engine=lualatex \
+  "cd /data/vol1 && pandoc src/ja/*.md \
+        --metadata lang=ja \
+        --lua-filter=../shared/filters/number-chapter.lua \
+        --lua-filter=../shared/filters/autoid.lua \
+        --lua-filter=../shared/filters/mermaid.lua \
+        --pdf-engine=lualatex \
+        --top-level-division=chapter \
+        --template=meta/template/custom-template.tex \
+        --toc \
+        --toc-depth=3 \
    --metadata-file=meta/ja.yaml \
-   --metadata lang=ja \
-   --metadata documentclass=article \
-   --metadata mainfont='Noto Sans CJK JP' \
-   --metadata sansfont='Noto Sans CJK JP' \
-   --metadata monofont='Noto Sans Mono CJK JP' \
    -o /data/book.pdf"
 ```
 
@@ -282,20 +285,24 @@ git push origin v1.0.0
    - Alternative fonts: `Source Han Code JP`, `Ricty Diminished`, etc.
 
 7. **Complete solution for Japanese PDF generation**:
-   - Recommended command (no external files required):
+   - Recommended command (using custom template):
    ```bash
    docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-     "cd /data/vol1 && pandoc src/ja/*.md --to pdf \
-      --pdf-engine=lualatex \
-      --metadata lang=ja \
-      --metadata documentclass=article \
-      --metadata mainfont='Noto Sans CJK JP' \
-      --metadata sansfont='Noto Sans CJK JP' \
-      --metadata monofont='Noto Sans Mono CJK JP' \
-      -o /data/book.pdf"
+     "cd /data/vol1 && pandoc src/ja/*.md \
+          --metadata lang=ja \
+          --lua-filter=../shared/filters/number-chapter.lua \
+          --lua-filter=../shared/filters/autoid.lua \
+          --lua-filter=../shared/filters/mermaid.lua \
+          --pdf-engine=lualatex \
+          --top-level-division=chapter \
+          --template=meta/template/custom-template.tex \
+          --toc \
+          --toc-depth=3 \
+     --metadata-file=meta/ja.yaml \
+     -o /data/book.pdf"
    ```
-   - For `ltjsbook.cls` errors: Use `article` class
-   - For font warnings: Specify all three fonts (main/sans/mono)
+   - Custom template controls fonts and layout
+   - Lua filters handle chapter numbering and Mermaid diagrams
 
 ### Checking logs
 
@@ -310,15 +317,19 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
    --metadata-file meta/ja.yaml \
    -o /data/debug.epub"
 
-# Debug in Docker environment (PDF with Japanese font support)
+# Debug in Docker environment (PDF)
 docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
-  "cd /data/vol1 && pandoc src/ja/*.md --to pdf  --verbose \
-   --pdf-engine=lualatex \
-   --metadata lang=ja \
-   --metadata documentclass=article \
-   --metadata mainfont='Noto Sans CJK JP' \
-   --metadata sansfont='Noto Sans CJK JP' \
-   --metadata monofont='Noto Sans Mono CJK JP' \
+  "cd /data/vol1 && pandoc src/ja/*.md --verbose \
+        --metadata lang=ja \
+        --lua-filter=../shared/filters/number-chapter.lua \
+        --lua-filter=../shared/filters/autoid.lua \
+        --lua-filter=../shared/filters/mermaid.lua \
+        --pdf-engine=lualatex \
+        --top-level-division=chapter \
+        --template=meta/template/custom-template.tex \
+        --toc \
+        --toc-depth=3 \
+   --metadata-file=meta/ja.yaml \
    -o /data/debug.pdf"
 ```
 
@@ -328,7 +339,7 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 ```bash
 # Environment setup with Homebrew
 brew install pandoc
-brew install --cask mactex
+brew install --cask texlive
 npm install -g @mermaid-js/mermaid-cli
 ```
 
@@ -344,7 +355,7 @@ npm install -g @mermaid-js/mermaid-cli
 ```bash
 # Environment setup with Chocolatey
 choco install pandoc
-choco install miktex
+choco install texlive
 npm install -g @mermaid-js/mermaid-cli
 ```
 
