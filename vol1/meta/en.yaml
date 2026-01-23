@@ -3,7 +3,7 @@ title: &title "Pandoc Book Starter"
 subtitle: &subtitle "Efficient Workflow for Technical Writing"
 author: &author
   - "Author Name"
-date: &date "2025-06-30"
+date: &date "2026-01-30"
 lang: &lang "en"
 description: &description |
   A practical guidebook for learning efficient technical writing methods using Pandoc.

@@ -23,7 +23,7 @@ This project is a template for efficiently writing and publishing technical book
 pandoc-book-starter/
 ├─ README.md              # This file
 ├─ Makefile              # Build automation (EPUB_OPTS/PDF_OPTS support)
-├─ Dockerfile            # Container environment (Node.js 20 + Mermaid CLI)
+├─ Dockerfile            # Container environment (Node.js 22 + Mermaid CLI)
 ├─ .textlintrc           # Text linting configuration
 ├─ .gitignore            # Git ignore settings
 ├─ .github/
@@ -64,9 +64,9 @@ pandoc-book-starter/
 
 ### Basic Environment
 
-- [Pandoc](https://pandoc.org/) 3.7.0.2 or later
+- [Pandoc](https://pandoc.org/) 3.8.3 or later
 - [Make](https://www.gnu.org/software/make/)
-- [Node.js](https://nodejs.org/) 20.x or later
+- [Node.js](https://nodejs.org/) 22.x or later
 
 ### Optional Environment
 
@@ -160,8 +160,8 @@ description: "Book Description"
 
 ### Docker Image Configuration
 - Base: `pandoc/latex:latest-ubuntu`
-- Pandoc 3.7.0.2
-- Node.js 20.x
+- Pandoc 3.8.3
+- Node.js 22.x
 - Mermaid CLI 10.9.1
 - Japanese font support
 

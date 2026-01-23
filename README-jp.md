@@ -23,7 +23,7 @@ Pandocを使用した技術書執筆のためのスターターテンプレー�
 pandoc-book-starter/
 ├─ README.md              # このファイル
 ├─ Makefile              # ビルド自動化（EPUB_OPTS/PDF_OPTS対応）
-├─ Dockerfile            # コンテナ環境（Node.js 20 + Mermaid CLI）
+├─ Dockerfile            # コンテナ環境（Node.js 22 + Mermaid CLI）
 ├─ .textlintrc           # 文章校正設定
 ├─ .gitignore            # Git除外設定
 ├─ .github/
@@ -64,9 +64,9 @@ pandoc-book-starter/
 
 ### 基本環境
 
-- [Pandoc](https://pandoc.org/) 3.7.0.2以降
+- [Pandoc](https://pandoc.org/) 3.8.3以降
 - [Make](https://www.gnu.org/software/make/)
-- [Node.js](https://nodejs.org/) 20.x以降
+- [Node.js](https://nodejs.org/) 22.x以降
 
 ### オプション環境
 
@@ -167,8 +167,8 @@ description: "書籍の説明"
 
 ### Dockerイメージの構成
 - ベース: `pandoc/latex:latest-ubuntu`
-- Pandoc 3.7.0.2
-- Node.js 20.x
+- Pandoc 3.8.3
+- Node.js 22.x
 - Mermaid CLI 10.9.1
 - 日本語フォント対応
 
