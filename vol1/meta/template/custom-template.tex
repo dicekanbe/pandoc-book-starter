@@ -48,7 +48,53 @@
 \newcounter{none}
 
 \usepackage[]{tcolorbox}
-\tcbuselibrary{breakable,theorems,skins}
+\tcbuselibrary{breakable,skins}
+
+% Pandoc fenced divs 用のカスタム環境
+% :::note 用（jlreqで\noteが定義済みのためnoteboxを使用）
+\newtcolorbox{notebox}{
+  enhanced,
+  breakable,
+  colback=gray!5,
+  colframe=gray!50,
+  fonttitle=\bfseries,
+  left=8pt,
+  right=8pt,
+  top=6pt,
+  bottom=6pt,
+  boxrule=0.5pt,
+  arc=2pt
+}
+
+% :::warning 用
+\newtcolorbox{warning}{
+  enhanced,
+  breakable,
+  colback=yellow!10,
+  colframe=orange!70,
+  fonttitle=\bfseries,
+  left=8pt,
+  right=8pt,
+  top=6pt,
+  bottom=6pt,
+  boxrule=0.5pt,
+  arc=2pt
+}
+
+% :::tip 用
+\newtcolorbox{tip}{
+  enhanced,
+  breakable,
+  colback=green!5,
+  colframe=green!50!black,
+  fonttitle=\bfseries,
+  left=8pt,
+  right=8pt,
+  top=6pt,
+  bottom=6pt,
+  boxrule=0.5pt,
+  arc=2pt
+}
 
 \usepackage{xcolor}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % 利用可能なら URL の改行を有効化

@@ -100,11 +100,13 @@ pdf:
 	@echo "Building Japanese PDF version..."
 	mkdir -p $(BUILD_DIR)/vol1/ja
 	cd vol1 && $(PANDOC) \
+		-f markdown+fenced_divs \
 		--to=pdf \
 		--metadata lang=ja \
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/custom-divs.lua \
 		--pdf-engine=lualatex \
 		--top-level-division=chapter \
 		--template=meta/template/custom-template.tex \
