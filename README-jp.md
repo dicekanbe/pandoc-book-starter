@@ -35,10 +35,11 @@ pandoc-book-starter/
 ├─ shared/               # 共有リソース
 │  ├─ assets/           # スタイルとフォント
 │  │  ├─ epub.css       # EPUB用CSS
-│  │  ├─ web.css        # Web用CSS
 │  │  └─ fonts/         # フォントファイル
 │  │     ├─ FiraCode-Regular.ttf
-│  │     └─ NotoSansJP-Regular.otf
+│  │     ├─ FiraCode-Bold.ttf
+│  │     ├─ NotoSansJP-Regular.otf
+│  │     └─ NotoSansJP-Bold.otf
 │  └─ filters/          # Pandocフィルター
 │     ├─ autoid.lua     # 自動ID付与
 │     ├─ mermaid.lua    # Mermaid図表対応
@@ -175,8 +176,8 @@ description: "書籍の説明"
 ### スタイルのカスタマイズ
 
 - EPUB用: `shared/assets/epub.css`
-- Web用: `shared/assets/web.css`
 - フィルター: `shared/filters/*.lua`
+- LaTeXテンプレート: `vol1/meta/template/custom-template.tex`
 
 ## Docker環境の詳細
 

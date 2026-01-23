@@ -21,10 +21,13 @@ This project is a template for efficiently writing and publishing technical book
 
 ```
 pandoc-book-starter/
-├─ README.md              # This file
+├─ README.md              # Project description (English)
+├─ README-jp.md          # Project description (Japanese)
 ├─ Makefile              # Build automation (EPUB_OPTS/PDF_OPTS support)
-├─ Dockerfile            # Container environment (Node.js 22 + Mermaid CLI)
-├─ .textlintrc           # Text linting configuration
+├─ Dockerfile            # Container environment (texlive-pandoc-ja + Node.js 22)
+├─ package.json          # Node.js dependencies
+├─ .textlintrc           # textlint configuration
+├─ prh.yml               # Proofreading dictionary
 ├─ .gitignore            # Git ignore settings
 ├─ .github/
 │  └─ workflows/
@@ -32,39 +35,42 @@ pandoc-book-starter/
 ├─ shared/               # Shared resources
 │  ├─ assets/           # Styles and fonts
 │  │  ├─ epub.css       # EPUB CSS
-│  │  ├─ web.css        # Web CSS
 │  │  └─ fonts/         # Font files
 │  │     ├─ FiraCode-Regular.ttf
-│  │     └─ NotoSansJP-Regular.otf
+│  │     ├─ FiraCode-Bold.ttf
+│  │     ├─ NotoSansJP-Regular.otf
+│  │     └─ NotoSansJP-Bold.otf
 │  └─ filters/          # Pandoc filters
 │     ├─ autoid.lua     # Auto ID assignment
 │     ├─ mermaid.lua    # Mermaid diagram support
 │     └─ number-chapter.lua # Multi-language chapter numbering
-├─ vol1/                # Volume 1
-│  ├─ src/              # Manuscript files
-│  │  ├─ ja/            # Japanese version
-│  │  │  ├─ 00_01_preface.md      # Preface
-│  │  │  ├─ 01_intro.md           # Introduction
-│  │  │  ├─ 02_keyword.md         # Keyword research
-│  │  │  └─ 03_theme.md           # About the theme
-│  │  └─ en/            # English version
-│  │     └─ 01_theme.md           # Theme
-│  ├─ assets/           # Volume-specific assets
-│  │  ├─ cover-ja.png   # Japanese cover
-│  │  └─ cover-en.png   # English cover
-│  └─ meta/             # Metadata
-│     ├─ ja.yaml        # Japanese settings
-│     ├─ en.yaml        # English settings
-│     ├─ ja_title.txt   # Japanese title
-│     └─ en_title.txt   # English title
-└─ vol2/                # Volume 2 (for expansion)
+└─ vol1/                # Volume 1
+   ├─ src/              # Manuscript files
+   │  ├─ ja/            # Japanese version
+   │  │  ├─ 00_01_preface.md      # Preface
+   │  │  ├─ 01_intro.md           # Introduction
+   │  │  ├─ 02_keyword.md         # Keyword research
+   │  │  ├─ 03_theme.md           # About the theme
+   │  │  └─ img/                  # Images
+   │  └─ en/            # English version
+   │     └─ 01_theme.md           # Theme
+   ├─ assets/           # Volume-specific assets
+   │  ├─ cover-ja.png   # Japanese cover
+   │  └─ cover-en.png   # English cover
+   ├─ meta/             # Metadata
+   │  ├─ ja.yaml        # Japanese settings
+   │  ├─ en.yaml        # English settings
+   │  └─ template/      # Custom templates
+   │     └─ custom-template.tex  # LaTeX template
+   ├─ img/              # Common images
+   └─ input.ltjruby     # LuaTeX-ja Ruby settings
 ```
 
 ## Required Environment
 
 ### Basic Environment
 
-- [Pandoc](https://pandoc.org/) 3.8.3 or later
+- [Pandoc](https://pandoc.org/) 3.7 or later
 - [Make](https://www.gnu.org/software/make/)
 - [Node.js](https://nodejs.org/) 22.x or later
 
@@ -87,9 +93,22 @@ cd pandoc-book-starter
 
 #### For local environment
 ```bash
-# Install textlint
-npm install -g textlint@14.2.1
-npm install -g textlint-rule-preset-jtf-style@2.3.14
+# Install Node.js packages
+npm install
+
+# Or install textlint globally
+npm install -g textlint@15.4.0 \
+  @textlint-ja/textlint-rule-preset-ai-writing@1.6.1 \
+  textlint-rule-max-ten@5.0.0 \
+  textlint-rule-no-mix-dearu-desumasu@6.0.4 \
+  textlint-rule-preset-ja-spacing@2.4.3 \
+  textlint-rule-preset-ja-technical-writing@12.0.2 \
+  textlint-rule-preset-jtf-style@3.0.3 \
+  textlint-rule-prh@6.1.0 \
+  textlint-rule-spellcheck-tech-word@5.0.0
+
+# Run textlint for proofreading
+npm run textlint
 ```
 
 #### For Docker environment (Recommended)
@@ -111,9 +130,13 @@ make epub
 # Japanese PDF
 make pdf
 
-# English version
+# English version EPUB/PDF
 make epub-en
 make pdf-en
+
+# All EPUBs / All PDFs
+make epub-all
+make pdf-all
 
 # Build all
 make all
@@ -153,17 +176,18 @@ description: "Book Description"
 ### Style customization
 
 - EPUB: `shared/assets/epub.css`
-- Web: `shared/assets/web.css`
 - Filters: `shared/filters/*.lua`
+- LaTeX template: `vol1/meta/template/custom-template.tex`
 
 ## Docker Environment Details
 
 ### Docker Image Configuration
-- Base: `pandoc/latex:latest-ubuntu`
-- Pandoc 3.8.3
+- Base: `tecolicom/texlive-pandoc-ja:latest`
+- Pandoc (latest)
+- TeX Live (Japanese support)
 - Node.js 22.x
 - Mermaid CLI 10.9.1
-- Japanese font support
+- Japanese fonts (Noto CJK, Noto Mono)
 
 ### Usage Examples
 ```bash
@@ -196,9 +220,8 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 GitHub Actions automatically:
 
 1. **On push**:
-   - Run textlint for proofreading
-   - Execute EPUB/PDF builds
-   - Validate with EPUBCheck
+   - Execute EPUB/PDF builds (using Pandoc 3.7.0.2)
+   - Convert Mermaid diagrams
    - Save artifacts
 
 2. **On tag push**:
