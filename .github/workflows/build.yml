@@ -106,6 +106,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Download artifacts
@@ -113,11 +115,21 @@ jobs:
       with:
         name: built-books
         path: build/
+
+    - name: Prepare release assets (unique filenames)
+      run: |
+        mkdir -p release-assets
+        cp build/vol1/ja/book.epub release-assets/book-ja.epub
+        cp build/vol1/ja/book.pdf  release-assets/book-ja.pdf
+        cp build/vol1/en/book.epub release-assets/book-en.epub
+        cp build/vol1/en/book.pdf  release-assets/book-en.pdf
     
     - name: Create GitHub Release (with assets)
       uses: softprops/action-gh-release@v2
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        # If repository settings restrict GITHUB_TOKEN write permissions,
+        # set secrets.RELEASE_TOKEN to a PAT with "repo" scope and it will be used.
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
       with:
         name: Release ${{ github.ref_name }}
         body: |
@@ -142,7 +154,7 @@ jobs:
         draft: false
         prerelease: false
         files: |
-          build/vol1/ja/book.epub
-          build/vol1/ja/book.pdf
-          build/vol1/en/book.epub
-          build/vol1/en/book.pdf
+          release-assets/book-ja.epub
+          release-assets/book-ja.pdf
+          release-assets/book-en.epub
+          release-assets/book-en.pdf
