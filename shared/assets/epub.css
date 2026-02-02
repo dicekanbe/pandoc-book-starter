@@ -13,7 +13,7 @@ body {
   font-family:
     "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
     sans-serif;
-  line-height: 1.8;
+  line-height: 1.6;
   margin: 0;
   padding: 1em;
   color: #333;
@@ -61,6 +61,8 @@ h4 {
 p {
   margin: 0.2em 0;
   text-align: justify;
+  text-indent: 1em;
+  line-height: 1.35;
 }
 
 /* Lists */
@@ -252,4 +254,16 @@ nav#toc ol {
 
 nav#toc li {
   margin: 0.2em 0;
+}
+
+/* ---------- COLOPHON (奥付) STYLING ---------- */
+section[epub\:type="colophon"] p,
+[epub\:type="colophon"] p {
+  text-indent: 0;
+}
+
+/* ---------- AFTERWORD STYLING ---------- */
+section.unnumbered p,
+.unnumbered p {
+  text-indent: 0;
 }
