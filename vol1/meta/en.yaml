@@ -12,7 +12,7 @@ description: &description |
 
 
 # EPUB settings
-cover-image: assets/cover-en.png
+cover-image: assets/cover-en.jpg
 epub-chapter-level: 2
 epub-metadata: |
   <dc:publisher>Your Publisher</dc:publisher>
