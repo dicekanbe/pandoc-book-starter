@@ -2,199 +2,254 @@
 
 /* Font face declarations */
 @font-face {
-    font-family: 'Fira Code';
-    src: url('../fonts/FiraCode-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Fira Code";
+  src: url("../fonts/FiraCode-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* Base styles */
 body {
-    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    line-height: 1.8;
-    margin: 0;
-    padding: 1em;
-    color: #333;
-    background-color: #fff;
+  font-family:
+    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
+    sans-serif;
+  line-height: 1.8;
+  margin: 0;
+  padding: 1em;
+  color: #333;
+  background-color: #fff;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    font-weight: bold;
-    line-height: 1.4;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    color: #2c3e50;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
+    sans-serif;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-top: 0.8em;
+  margin-bottom: 0.3em;
+  color: #2c3e50;
 }
 
 h1 {
-    font-size: 1.5em;
-    padding-bottom: 0;
-    border-bottom: 2px solid #3498db;
+  font-size: 1.5em;
+  padding-bottom: 0;
+  border-bottom: 2px solid #3498db;
 }
 
 h2 {
-    font-size: 1.2em;
-    padding-bottom: 0;
-    border-bottom: 1px solid #bdc3c7;
+  font-size: 1.2em;
+  padding-bottom: 0;
+  border-bottom: 1px solid #bdc3c7;
 }
 
 h3 {
-    font-size: 1.1em;
+  font-size: 1.1em;
 }
 
 h4 {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 /* Paragraphs */
 p {
-    margin-bottom: 1em;
-    text-align: justify;
+  margin: 0.2em 0;
+  text-align: justify;
 }
 
 /* Lists */
-ul, ol {
-    margin-bottom: 0.5em;
-    padding-left: 1em;
+ul,
+ol {
+  margin: 0.2em 0;
+  padding-left: 1em;
 }
 
 li {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.1em;
+  line-height: 1.4;
 }
 
 /* Code blocks */
 pre {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 4px;
-    padding: 1em;
-    overflow-x: auto;
-    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-    font-size: 0.8em;
-    line-height: 1.2;
-    margin-bottom: 0.5em;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 0.6em 0.8em;
+  overflow-x: auto;
+  font-family: "Fira Code", "Consolas", "Monaco", monospace;
+  font-size: 0.75em;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
 }
 
 code {
-    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-    background-color: #f8f9fa;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
+  font-family: "Fira Code", "Consolas", "Monaco", monospace;
+  background-color: #f8f9fa;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
 }
 
 pre code {
-    background-color: transparent;
-    padding: 0;
+  background-color: transparent;
+  padding: 0;
+  line-height: inherit;
+}
+
+/* Pandoc syntax highlighting */
+div.sourceCode {
+  margin: 0.5em 0;
+}
+
+pre.sourceCode {
+  line-height: 1.15;
+  padding: 0.4em 0.6em;
+}
+
+pre.sourceCode code {
+  line-height: 1.15;
+  display: block;
+}
+
+pre.sourceCode code span {
+  line-height: 1.15;
+  display: inline;
+}
+
+pre.sourceCode code span a {
+  display: none;
 }
 
 /* Tables */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1em;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5em 0;
+  font-size: 0.85em;
+  line-height: 1.3;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 0.5em;
-    text-align: left;
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 0.25em 0.4em;
+  text-align: left;
 }
 
 th {
-    background-color: #f8f9fa;
-    font-weight: bold;
+  background-color: #f8f9fa;
+  font-weight: bold;
 }
 
 /* Links */
 a {
-    color: #0c5f96;
-    text-decoration: none;
+  color: #0c5f96;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Blockquotes */
 blockquote {
-    border-left: 4px solid #3498db;
-    padding-left: 1em;
-    margin: 1em 0;
-    font-style: italic;
-    color: #555;
+  border-left: 4px solid #3498db;
+  padding-left: 1em;
+  margin: 1em 0;
+  font-style: italic;
+  color: #555;
 }
 
 /* Images */
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 1em auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
 }
 
 /* Figures */
 figure {
-    margin: 1em 0;
-    text-align: center;
+  margin: 1em 0;
+  text-align: center;
 }
 
 figcaption {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 0.5em;
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 0.5em;
 }
 
 /* Page breaks */
 .page-break {
-    page-break-before: always;
+  page-break-before: always;
 }
 
 /* Chapter breaks */
 .chapter {
-    page-break-before: always;
+  page-break-before: always;
 }
 
 /* Special elements */
 .note {
-    background-color: #e8f4f8;
-    border-left: 4px solid #3498db;
-    padding: 1em;
-    margin: 1em 0;
+  background-color: #e8f4f8;
+  border-left: 4px solid #3498db;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-size: 0.8em;
 }
 
 .warning {
-    background-color: #fdf2e9;
-    border-left: 4px solid #e67e22;
-    padding: 1em;
-    margin: 1em 0;
+  background-color: #fdf2e9;
+  border-left: 4px solid #e67e22;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-size: 0.8em;
 }
 
 .tip {
-    background-color: #eafaf1;
-    border-left: 4px solid #27ae60;
-    padding: 1em;
-    margin: 1em 0;
+  background-color: #eafaf1;
+  border-left: 4px solid #27ae60;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-size: 0.8em;
 }
 
-  /* ---------- TOC STYLING ---------- */
-  nav#toc .toc-section-number {
-    display: none;
-  }
+/* ボックス内の段落の余白調整 */
+.note p:first-child,
+.warning p:first-child,
+.tip p:first-child {
+  margin-top: 0;
+}
 
-  nav#toc {
-    padding: 0;
-    border-radius: 5px;
-    font-size: 0.8em;
-    line-height: 1.2;
-  }
+.note p:last-child,
+.warning p:last-child,
+.tip p:last-child {
+  margin-bottom: 0;
+}
 
-  nav#toc ol {
-    list-style-type: none;
-    padding-left: 1em;
-  }
+/* ---------- TOC STYLING ---------- */
+nav#toc .toc-section-number {
+  display: none;
+}
 
-  nav#toc li {
-    margin: 0.2em 0;
-  }
+nav#toc {
+  padding: 0;
+  border-radius: 5px;
+  font-size: 0.8em;
+  line-height: 1.2;
+}
+
+nav#toc ol {
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+nav#toc li {
+  margin: 0.2em 0;
+}

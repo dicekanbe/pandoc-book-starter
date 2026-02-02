@@ -3,6 +3,16 @@
     "textlint-rule-preset-ja-technical-writing": {
       "no-exclamation-question-mark": false,
       "ja-no-weak-phrase": false,
+      "sentence-length": {
+        "max": 200
+      },
+      "ja-no-mixed-period": false,
+      "ja-no-successive-word": {
+        "allow": ["○", "△", "×", "─"]
+      },
+      "max-kanji-continuous-len": {
+        "max": 10
+      },
       "no-doubled-joshi": {
         "strict": false,
         "allow": [
@@ -10,6 +20,12 @@
           "や",
           "か"
         ]
+      },
+      "no-mix-dearu-desumasu": {
+        "preferInHeader": "",
+        "preferInBody": "ですます",
+        "preferInList": "ですます",
+        "strict": false
       }
     },
     "textlint-rule-preset-ja-spacing": {
@@ -18,7 +34,7 @@
       }
     },
     "@textlint-ja/preset-ai-writing": true,
-    "textlint-rule-spellcheck-tech-word": true,
+    "textlint-rule-spellcheck-tech-word": false,
     "textlint-rule-prh": {
       "rulePaths": [
         "./prh.yml"

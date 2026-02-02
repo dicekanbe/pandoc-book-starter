@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "textlint": "textlint 'vol1/src/ja/*.md'"
+    "textlint": "textlint 'vol1/src/ja/*.md'",
+    "textlint:fix": "textlint --fix 'vol1/src/ja/*.md'",
+    "lint:links": "find vol1/src -name '*.md' | xargs markdown-link-check -c mlc.config.json"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/dicekanbe/pandoc-book-starter#readme",
   "devDependencies": {
     "@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
+    "markdown-link-check": "^3.14.2",
     "textlint": "^15.4.0",
     "textlint-rule-max-ten": "^5.0.0",
     "textlint-rule-no-mix-dearu-desumasu": "^6.0.4",
