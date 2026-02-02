@@ -1,0 +1,22 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https://example.com" },
+    { "pattern": "^img/" }
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^/",
+      "replacement": "file://{{BASEURL}}/"
+    }
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0"
+      }
+    }
+  ],
+  "retryOn429": true,
+  "timeout": "10s"
+}

@@ -1,4 +1,90 @@
 version: 1
 rules:
-  - expected: Japanese
-    pattern: japanese
+  # バージョン管理・CI/CD
+  - expected: GitHub
+    pattern:
+      - github
+      - Github
+  - expected: GitHub Actions
+    pattern:
+      - github actions
+      - Github Actions
+      - Github actions
+
+  # ドキュメント変換
+  - expected: Pandoc
+    pattern:
+      - pandoc
+      - PANDOC
+  - expected: Markdown
+    pattern:
+      - markdown
+      - MARKDOWN
+  - expected: LaTeX
+    pattern:
+      - latex
+      - Latex
+      - LATEX
+  - expected: EPUB
+    pattern:
+      - /\bepub\b(?!:type)/
+      - /\bEpub\b/
+      - /\bePub\b/
+
+  # プログラミング言語
+  - expected: JavaScript
+    pattern:
+      - javascript
+      - Javascript
+  - expected: TypeScript
+    pattern:
+      - typescript
+      - Typescript
+
+  # ツール・サービス
+  - expected: Docker
+    pattern:
+      - docker
+      - DOCKER
+  - expected: Kindle
+    pattern:
+      - kindle
+      - KINDLE
+  - expected: VS Code
+    pattern:
+      - vscode
+      - VScode
+      - Vscode
+  - expected: Cursor
+    pattern:
+      - cursor
+      - CURSOR
+  - expected: Zed
+    pattern:
+      - zed
+      - ZED
+  - expected: Antigravity
+    pattern:
+      - antigravity
+      - AntiGravity
+      - ANTIGRAVITY
+  - expected: Obsidian
+    pattern:
+      - obsidian
+      - OBSIDIAN
+  - expected: Mermaid
+    pattern:
+      - mermaid
+      - MERMAID
+  - expected: EpubCheck
+    pattern:
+      - epubcheck
+      - Epubcheck
+  - expected: Leanpub
+    pattern:
+      - leanpub
+      - LeanPub
+  - expected: BOOTH
+    pattern:
+      - booth
+      - Booth
