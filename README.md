@@ -223,7 +223,7 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 GitHub Actions automatically:
 
 1. **On push**:
-   - Execute EPUB/PDF builds (using Pandoc 3.7.0.2)
+   - Execute EPUB/PDF builds (using Pandoc 3.8.3)
    - Convert Mermaid diagrams
    - Save artifacts
 

@@ -223,7 +223,7 @@ docker run --rm -v $(pwd):/data --entrypoint="" pandoc-book sh -c \
 GitHub Actionsが自動的に：
 
 1. **プッシュ時**:
-   - EPUB/PDFのビルドを実行（Pandoc 3.7.0.2使用）
+   - EPUB/PDFのビルドを実行（Pandoc 3.8.3使用）
    - Mermaid図表の変換
    - 成果物をアーティファクトとして保存
 
