@@ -2,105 +2,104 @@ name: Build Books
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
     tags:
-      - 'v*'
+      - "v*"
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
-  contents: write  # リリースの作成とファイルアップロードに必要
+  contents: write # リリースの作成とファイルアップロードに必要
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Pandoc
-      uses: r-lib/actions/setup-pandoc@v2
-      with:
-        pandoc-version: '3.7.0.2'
-    
-    - name: Install TeX Live
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-lang-cjk texlive-lang-chinese texlive-lang-japanese texlive-luatex texlive-latex-recommended
-    
-    - name: Install Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-    
-    
-    - name: Install dependencies for Puppeteer
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          libnss3 \
-          libatk1.0-0 \
-          libatk-bridge2.0-0 \
-          libcups2 \
-          libdrm2 \
-          libxkbcommon0 \
-          libxcomposite1 \
-          libxdamage1 \
-          libxrandr2 \
-          libgbm1 \
-          libgtk-3-0 \
-          libasound2t64
-    
-    - name: Install mermaid-cli
-      run: |
-        npm install -g @mermaid-js/mermaid-cli
-        # Set up environment for puppeteer
-        echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false" >> $GITHUB_ENV
-        echo "PUPPETEER_ARGS=--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu" >> $GITHUB_ENV
 
-    - name: Build books
-      run: |
-        # Ensure puppeteer environment variables are exported
-        export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
-        export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
-        make epub-all pdf-all
-    
-    # - name: Install EPUBCheck
-    #   run: |
-    #     # Download EPUBCheck
-    #     wget https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
-    #     unzip epubcheck-5.1.0.zip
-    #     sudo mv epubcheck-5.1.0 /opt/epubcheck
-    #     # Create symlink for easy access
-    #     sudo ln -s /opt/epubcheck/epubcheck.jar /usr/local/bin/epubcheck.jar
-    
-    # - name: Validate EPUB files
-    #   run: |
-    #     echo "Validating EPUB files..."
-    #     # Check if EPUB files exist and validate them
-    #     if [ -f "build/vol1/ja/book.epub" ]; then
-    #       echo "Validating Japanese EPUB..."
-    #       java -jar /usr/local/bin/epubcheck.jar build/vol1/ja/book.epub
-    #     else
-    #       echo "Japanese EPUB not found"
-    #       exit 1
-    #     fi
-        
-    #     if [ -f "build/vol1/en/book.epub" ]; then
-    #       echo "Validating English EPUB..."
-    #       java -jar /usr/local/bin/epubcheck.jar build/vol1/en/book.epub
-    #     else
-    #       echo "English EPUB not found"
-    #       exit 1
-    #     fi
-        
-    #     echo "All EPUB files are valid!"
-    
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: built-books
-        path: build/
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: "3.8.3"
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-lang-cjk texlive-lang-chinese texlive-lang-japanese texlive-luatex texlive-latex-recommended
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnss3 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libxkbcommon0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libgbm1 \
+            libgtk-3-0 \
+            libasound2t64
+
+      - name: Install mermaid-cli
+        run: |
+          npm install -g @mermaid-js/mermaid-cli
+          # Set up environment for puppeteer
+          echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false" >> $GITHUB_ENV
+          echo "PUPPETEER_ARGS=--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu" >> $GITHUB_ENV
+
+      - name: Build books
+        run: |
+          # Ensure puppeteer environment variables are exported
+          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+          export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
+          make epub-all pdf-all
+
+      # - name: Install EPUBCheck
+      #   run: |
+      #     # Download EPUBCheck
+      #     wget https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
+      #     unzip epubcheck-5.1.0.zip
+      #     sudo mv epubcheck-5.1.0 /opt/epubcheck
+      #     # Create symlink for easy access
+      #     sudo ln -s /opt/epubcheck/epubcheck.jar /usr/local/bin/epubcheck.jar
+
+      # - name: Validate EPUB files
+      #   run: |
+      #     echo "Validating EPUB files..."
+      #     # Check if EPUB files exist and validate them
+      #     if [ -f "build/vol1/ja/book.epub" ]; then
+      #       echo "Validating Japanese EPUB..."
+      #       java -jar /usr/local/bin/epubcheck.jar build/vol1/ja/book.epub
+      #     else
+      #       echo "Japanese EPUB not found"
+      #       exit 1
+      #     fi
+
+      #     if [ -f "build/vol1/en/book.epub" ]; then
+      #       echo "Validating English EPUB..."
+      #       java -jar /usr/local/bin/epubcheck.jar build/vol1/en/book.epub
+      #     else
+      #       echo "English EPUB not found"
+      #       exit 1
+      #     fi
+
+      #     echo "All EPUB files are valid!"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-books
+          path: build/
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
@@ -108,53 +107,53 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
-    steps:
-    - name: Download artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: built-books
-        path: build/
 
-    - name: Prepare release assets (unique filenames)
-      run: |
-        mkdir -p release-assets
-        cp build/vol1/ja/book.epub release-assets/book-ja.epub
-        cp build/vol1/ja/book.pdf  release-assets/book-ja.pdf
-        cp build/vol1/en/book.epub release-assets/book-en.epub
-        cp build/vol1/en/book.pdf  release-assets/book-en.pdf
-    
-    - name: Create GitHub Release (with assets)
-      uses: softprops/action-gh-release@v2
-      env:
-        # If repository settings restrict GITHUB_TOKEN write permissions,
-        # set secrets.RELEASE_TOKEN to a PAT with "repo" scope and it will be used.
-        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
-      with:
-        name: Release ${{ github.ref_name }}
-        body: |
-          ## 📚 電子書籍リリース ${{ github.ref_name }}
-          
-          このリリースには以下のファイルが含まれています：
-          
-          ### 📖 日本語版
-          - `book-ja.epub` - EPUB形式
-          - `book-ja.pdf` - PDF形式
-          
-          ### 📖 English Version
-          - `book-en.epub` - EPUB format
-          - `book-en.pdf` - PDF format
-          
-          ### 🔍 変更内容
-          詳細な変更内容については、コミット履歴をご確認ください。
-          
-          ### 📋 システム要件
-          - EPUB: Kindle、Calibre、Adobe Digital Editions等のEPUBリーダー
-          - PDF: PDF対応のビューアー
-        draft: false
-        prerelease: false
-        files: |
-          release-assets/book-ja.epub
-          release-assets/book-ja.pdf
-          release-assets/book-en.epub
-          release-assets/book-en.pdf
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: built-books
+          path: build/
+
+      - name: Prepare release assets (unique filenames)
+        run: |
+          mkdir -p release-assets
+          cp build/vol1/ja/book.epub release-assets/book-ja.epub
+          cp build/vol1/ja/book.pdf  release-assets/book-ja.pdf
+          cp build/vol1/en/book.epub release-assets/book-en.epub
+          cp build/vol1/en/book.pdf  release-assets/book-en.pdf
+
+      - name: Create GitHub Release (with assets)
+        uses: softprops/action-gh-release@v2
+        env:
+          # If repository settings restrict GITHUB_TOKEN write permissions,
+          # set secrets.RELEASE_TOKEN to a PAT with "repo" scope and it will be used.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## 電子書籍リリース ${{ github.ref_name }}
+
+            このリリースには以下のファイルが含まれています：
+
+            ### 日本語版
+            - `book-ja.epub` - EPUB形式
+            - `book-ja.pdf` - PDF形式
+
+            ### English Version
+            - `book-en.epub` - EPUB format
+            - `book-en.pdf` - PDF format
+
+            ### 変更内容
+            詳細な変更内容については、コミット履歴をご確認ください。
+
+            ### システム要件
+            - EPUB: Kindle、Calibre、Adobe Digital Editions等のEPUBリーダー
+            - PDF: PDF対応のビューアー
+          draft: false
+          prerelease: false
+          files: |
+            release-assets/book-ja.epub
+            release-assets/book-ja.pdf
+            release-assets/book-en.epub
+            release-assets/book-en.pdf
