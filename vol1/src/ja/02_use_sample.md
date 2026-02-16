@@ -162,10 +162,10 @@ graph TD
 
 これらのキーワードを理解することで、技術書執筆がスムーズになります。
 
-<!-- textlint-disable-next-line ja-technical-writing/ja-no-mixed-period -->
+
 ::: tip
 **ヒント**: 各キーワードの詳細な使い方は、後続の章で実践的に学んでいきます。
-<!-- textlint-disable-next-line ja-technical-writing/ja-no-mixed-period -->
+
 :::
 
 次の章からは、実際の環境構築について説明します。
