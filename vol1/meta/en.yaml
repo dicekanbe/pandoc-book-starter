@@ -42,9 +42,11 @@ toccolor: black
 
 # Custom headers
 header-includes: |
+  ```{=latex}
   \usepackage{fontspec}
   \setmainfont[Path=../shared/assets/fonts/,Extension=.otf]{NotoSansJP-Regular}
   \setmonofont[Path=../shared/assets/fonts/,Extension=.ttf]{FiraCode-Regular}
+  ```
 
 # Colophon
 colophon:

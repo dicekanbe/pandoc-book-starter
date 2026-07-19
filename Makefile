@@ -18,6 +18,7 @@ EPUB_OPTS = --to=epub3 \
 	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 	--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf
 
 
@@ -26,6 +27,7 @@ PDF_OPTS = --to=pdf \
 	--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 	--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 	--pdf-engine=lualatex \
 	--top-level-division=chapter \
 	--template=meta/template/custom-template.tex \
@@ -70,6 +72,7 @@ epub:
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/ja/book.epub \
 		src/ja/*.md \
@@ -88,6 +91,7 @@ epub-en:
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 		--epub-embed-font ../$(SHARED_DIR)/assets/fonts/FiraCode-Regular.ttf \
 		-o ../$(BUILD_DIR)/vol1/en/book.epub \
 		src/en/*.md \
@@ -106,6 +110,7 @@ pdf:
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/custom-divs.lua \
 		--pdf-engine=lualatex \
 		--top-level-division=chapter \
@@ -127,6 +132,7 @@ pdf-en:
 		--lua-filter=../$(SHARED_DIR)/filters/number-chapter.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/autoid.lua \
 		--lua-filter=../$(SHARED_DIR)/filters/mermaid.lua \
+		--lua-filter=../$(SHARED_DIR)/filters/number-figures.lua \
 		--pdf-engine=lualatex \
 		--top-level-division=chapter \
 		--template=meta/template/custom-template.tex \
