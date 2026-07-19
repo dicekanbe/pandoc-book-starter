@@ -105,3 +105,6 @@ epubcheck-5.1.0/
 backup/
 
 input.ltjruby
+
+# Claude Code local settings
+.claude/settings.local.json
