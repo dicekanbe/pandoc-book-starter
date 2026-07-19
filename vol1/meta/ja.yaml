@@ -41,7 +41,9 @@ urlcolor: blue
 toccolor: black
 
 # カスタムヘッダー (LaTeX/PDF専用)
+# ```{=latex} で囲むことで Markdown として解釈されず、コメント等もそのまま通る
 header-includes: |
+  ```{=latex}
   \usepackage{luatexja-fontspec}
 
   % 和文フォント (NotoSansJP)
@@ -102,6 +104,7 @@ header-includes: |
     UprightFont=*-Regular,
     BoldFont=*-Bold
   ]{NotoSansJP}
+  ```
 
 colophon:
   book-title: *title

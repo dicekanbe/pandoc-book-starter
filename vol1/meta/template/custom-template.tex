@@ -37,6 +37,11 @@
 \def\fps@figure{htbp}
 \makeatother
 
+% 図キャプション: number-figures.lua フィルタが「図1-1: 」を付与するため、
+% jlreq 既定の「図N」ラベルを無効化する
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+
 % pandocboundedコマンドの定義 - 画像を見やすいサイズで表示
 \newcommand{\pandocbounded}[1]{%
   \adjustbox{width=\textwidth, max height=0.2\textheight, min width=0.6\textwidth, center}{#1}%
@@ -200,6 +205,12 @@
 
 % etoolbox を使用
 \usepackage{etoolbox}
+
+% メタデータ (ja.yaml / en.yaml) の header-includes をここに展開する
+% （フォント設定などはテンプレートではなくメタデータ側で管理）
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 \begin{document}
 
